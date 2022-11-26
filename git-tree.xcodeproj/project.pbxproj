@@ -14,6 +14,9 @@
 		B4C76B3B293248B6005AD4AD /* git_treeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B3A293248B6005AD4AD /* git_treeTests.swift */; };
 		B4C76B45293248B6005AD4AD /* git_treeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B44293248B6005AD4AD /* git_treeUITests.swift */; };
 		B4C76B47293248B6005AD4AD /* git_treeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B46293248B6005AD4AD /* git_treeUITestsLaunchTests.swift */; };
+		B4C76B5529324B0B005AD4AD /* ObjectiveGit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4C76B5429324B0A005AD4AD /* ObjectiveGit.framework */; };
+		B4C76B5629324B0B005AD4AD /* ObjectiveGit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B4C76B5429324B0A005AD4AD /* ObjectiveGit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B4C76B5A29324BEB005AD4AD /* GitClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B5929324BEB005AD4AD /* GitClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +36,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		B4C76B5729324B0B005AD4AD /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B4C76B5629324B0B005AD4AD /* ObjectiveGit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		B4C76B26293248A8005AD4AD /* git-tree.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "git-tree.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4C76B29293248A8005AD4AD /* git_treeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = git_treeApp.swift; sourceTree = "<group>"; };
@@ -44,6 +61,8 @@
 		B4C76B40293248B6005AD4AD /* git-treeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "git-treeUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4C76B44293248B6005AD4AD /* git_treeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = git_treeUITests.swift; sourceTree = "<group>"; };
 		B4C76B46293248B6005AD4AD /* git_treeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = git_treeUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		B4C76B5429324B0A005AD4AD /* ObjectiveGit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjectiveGit.framework; path = Carthage/Build/iOS/ObjectiveGit.framework; sourceTree = "<group>"; };
+		B4C76B5929324BEB005AD4AD /* GitClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4C76B5529324B0B005AD4AD /* ObjectiveGit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +98,7 @@
 				B4C76B39293248B6005AD4AD /* git-treeTests */,
 				B4C76B43293248B6005AD4AD /* git-treeUITests */,
 				B4C76B27293248A8005AD4AD /* Products */,
+				B4C76B5329324B0A005AD4AD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -96,6 +117,7 @@
 			children = (
 				B4C76B29293248A8005AD4AD /* git_treeApp.swift */,
 				B4C76B2B293248A8005AD4AD /* ContentView.swift */,
+				B4C76B5929324BEB005AD4AD /* GitClient.swift */,
 				B4C76B2D293248B2005AD4AD /* Assets.xcassets */,
 				B4C76B2F293248B2005AD4AD /* Preview Content */,
 			);
@@ -127,6 +149,14 @@
 			path = "git-treeUITests";
 			sourceTree = "<group>";
 		};
+		B4C76B5329324B0A005AD4AD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B4C76B5429324B0A005AD4AD /* ObjectiveGit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -137,6 +167,8 @@
 				B4C76B22293248A8005AD4AD /* Sources */,
 				B4C76B23293248A8005AD4AD /* Frameworks */,
 				B4C76B24293248A8005AD4AD /* Resources */,
+				B4C76B5729324B0B005AD4AD /* Embed Frameworks */,
+				B4C76B5829324B3C005AD4AD /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -252,6 +284,27 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		B4C76B5829324B3C005AD4AD /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/ObjectiveGit.framework",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		B4C76B22293248A8005AD4AD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -259,6 +312,7 @@
 			files = (
 				B4C76B2C293248A8005AD4AD /* ContentView.swift in Sources */,
 				B4C76B2A293248A8005AD4AD /* git_treeApp.swift in Sources */,
+				B4C76B5A29324BEB005AD4AD /* GitClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,7 +473,12 @@
 				DEVELOPMENT_ASSET_PATHS = "\"git-tree/Preview Content\"";
 				DEVELOPMENT_TEAM = R7GX9454SD;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
+				"HEADER_SEARCH_PATHS[arch=*]" = "$(SRCROOT)/Carthage/Build/iOS/ObjectiveGit.framework/Headers/";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -448,7 +507,12 @@
 				DEVELOPMENT_ASSET_PATHS = "\"git-tree/Preview Content\"";
 				DEVELOPMENT_TEAM = R7GX9454SD;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
+				"HEADER_SEARCH_PATHS[arch=*]" = "$(SRCROOT)/Carthage/Build/iOS/ObjectiveGit.framework/Headers/";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
