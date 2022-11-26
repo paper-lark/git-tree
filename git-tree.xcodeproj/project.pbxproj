@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B4C76B2A293248A8005AD4AD /* git_treeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B29293248A8005AD4AD /* git_treeApp.swift */; };
-		B4C76B2C293248A8005AD4AD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B2B293248A8005AD4AD /* ContentView.swift */; };
+		B4C76B2A293248A8005AD4AD /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B29293248A8005AD4AD /* App.swift */; };
+		B4C76B2C293248A8005AD4AD /* RepositoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B2B293248A8005AD4AD /* RepositoryListView.swift */; };
 		B4C76B2E293248B2005AD4AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4C76B2D293248B2005AD4AD /* Assets.xcassets */; };
 		B4C76B31293248B2005AD4AD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4C76B30293248B2005AD4AD /* Preview Assets.xcassets */; };
 		B4C76B3B293248B6005AD4AD /* git_treeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B3A293248B6005AD4AD /* git_treeTests.swift */; };
@@ -17,6 +17,17 @@
 		B4C76B5529324B0B005AD4AD /* ObjectiveGit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4C76B5429324B0A005AD4AD /* ObjectiveGit.framework */; };
 		B4C76B5629324B0B005AD4AD /* ObjectiveGit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B4C76B5429324B0A005AD4AD /* ObjectiveGit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B4C76B5A29324BEB005AD4AD /* GitClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B5929324BEB005AD4AD /* GitClient.swift */; };
+		B4C76B5D293258AA005AD4AD /* DocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B5C293258AA005AD4AD /* DocumentPicker.swift */; };
+		B4C76B64293267AA005AD4AD /* RepositoryInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B63293267AA005AD4AD /* RepositoryInfoModel.swift */; };
+		B4C76B6829326AF9005AD4AD /* RepositoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B6729326AF9005AD4AD /* RepositoryView.swift */; };
+		B4C76B6A2933654C005AD4AD /* RepositoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B692933654C005AD4AD /* RepositoryViewModel.swift */; };
+		B4C76B6C293385E4005AD4AD /* RepositoryListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B6B293385E4005AD4AD /* RepositoryListViewModel.swift */; };
+		B4C76B6E29338FBA005AD4AD /* RemoteCredentialsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B6D29338FBA005AD4AD /* RemoteCredentialsModel.swift */; };
+		B4C76B70293390E7005AD4AD /* IconWithText.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B6F293390E7005AD4AD /* IconWithText.swift */; };
+		B4C76B722933922F005AD4AD /* RemoteCredentialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B712933922F005AD4AD /* RemoteCredentialsView.swift */; };
+		B4C76B742933936C005AD4AD /* RemoteCredentialsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B732933936C005AD4AD /* RemoteCredentialsViewModel.swift */; };
+		B4C76B7629339E1E005AD4AD /* KeychainConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B7529339E1E005AD4AD /* KeychainConfiguration.swift */; };
+		B4C76B7929339FBF005AD4AD /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B7829339FBF005AD4AD /* KeychainHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,8 +63,8 @@
 
 /* Begin PBXFileReference section */
 		B4C76B26293248A8005AD4AD /* git-tree.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "git-tree.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B4C76B29293248A8005AD4AD /* git_treeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = git_treeApp.swift; sourceTree = "<group>"; };
-		B4C76B2B293248A8005AD4AD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B4C76B29293248A8005AD4AD /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
+		B4C76B2B293248A8005AD4AD /* RepositoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryListView.swift; sourceTree = "<group>"; };
 		B4C76B2D293248B2005AD4AD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B4C76B30293248B2005AD4AD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B4C76B36293248B6005AD4AD /* git-treeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "git-treeTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -63,6 +74,19 @@
 		B4C76B46293248B6005AD4AD /* git_treeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = git_treeUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		B4C76B5429324B0A005AD4AD /* ObjectiveGit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjectiveGit.framework; path = Carthage/Build/iOS/ObjectiveGit.framework; sourceTree = "<group>"; };
 		B4C76B5929324BEB005AD4AD /* GitClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitClient.swift; sourceTree = "<group>"; };
+		B4C76B5B29324EFF005AD4AD /* ObjectiveGit-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ObjectiveGit-Bridging-Header.h"; sourceTree = "<group>"; };
+		B4C76B5C293258AA005AD4AD /* DocumentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPicker.swift; sourceTree = "<group>"; };
+		B4C76B612932673C005AD4AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		B4C76B63293267AA005AD4AD /* RepositoryInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryInfoModel.swift; sourceTree = "<group>"; };
+		B4C76B6729326AF9005AD4AD /* RepositoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryView.swift; sourceTree = "<group>"; };
+		B4C76B692933654C005AD4AD /* RepositoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryViewModel.swift; sourceTree = "<group>"; };
+		B4C76B6B293385E4005AD4AD /* RepositoryListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryListViewModel.swift; sourceTree = "<group>"; };
+		B4C76B6D29338FBA005AD4AD /* RemoteCredentialsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteCredentialsModel.swift; sourceTree = "<group>"; };
+		B4C76B6F293390E7005AD4AD /* IconWithText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconWithText.swift; sourceTree = "<group>"; };
+		B4C76B712933922F005AD4AD /* RemoteCredentialsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteCredentialsView.swift; sourceTree = "<group>"; };
+		B4C76B732933936C005AD4AD /* RemoteCredentialsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteCredentialsViewModel.swift; sourceTree = "<group>"; };
+		B4C76B7529339E1E005AD4AD /* KeychainConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainConfiguration.swift; sourceTree = "<group>"; };
+		B4C76B7829339FBF005AD4AD /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,11 +139,16 @@
 		B4C76B28293248A8005AD4AD /* git-tree */ = {
 			isa = PBXGroup;
 			children = (
-				B4C76B29293248A8005AD4AD /* git_treeApp.swift */,
-				B4C76B2B293248A8005AD4AD /* ContentView.swift */,
-				B4C76B5929324BEB005AD4AD /* GitClient.swift */,
+				B4C76B7729339FAF005AD4AD /* Helpers */,
+				B4C76B29293248A8005AD4AD /* App.swift */,
+				B4C76B6229326752005AD4AD /* Git */,
+				B4C76B612932673C005AD4AD /* Info.plist */,
+				B4C76B6029326709005AD4AD /* ModelView */,
+				B4C76B5F293266FB005AD4AD /* Model */,
+				B4C76B5E293266F2005AD4AD /* View */,
 				B4C76B2D293248B2005AD4AD /* Assets.xcassets */,
 				B4C76B2F293248B2005AD4AD /* Preview Content */,
+				B4C76B5B29324EFF005AD4AD /* ObjectiveGit-Bridging-Header.h */,
 			);
 			path = "git-tree";
 			sourceTree = "<group>";
@@ -155,6 +184,54 @@
 				B4C76B5429324B0A005AD4AD /* ObjectiveGit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B4C76B5E293266F2005AD4AD /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B4C76B5C293258AA005AD4AD /* DocumentPicker.swift */,
+				B4C76B2B293248A8005AD4AD /* RepositoryListView.swift */,
+				B4C76B6729326AF9005AD4AD /* RepositoryView.swift */,
+				B4C76B6F293390E7005AD4AD /* IconWithText.swift */,
+				B4C76B712933922F005AD4AD /* RemoteCredentialsView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		B4C76B5F293266FB005AD4AD /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B4C76B63293267AA005AD4AD /* RepositoryInfoModel.swift */,
+				B4C76B6D29338FBA005AD4AD /* RemoteCredentialsModel.swift */,
+				B4C76B7529339E1E005AD4AD /* KeychainConfiguration.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		B4C76B6029326709005AD4AD /* ModelView */ = {
+			isa = PBXGroup;
+			children = (
+				B4C76B692933654C005AD4AD /* RepositoryViewModel.swift */,
+				B4C76B6B293385E4005AD4AD /* RepositoryListViewModel.swift */,
+				B4C76B732933936C005AD4AD /* RemoteCredentialsViewModel.swift */,
+			);
+			path = ModelView;
+			sourceTree = "<group>";
+		};
+		B4C76B6229326752005AD4AD /* Git */ = {
+			isa = PBXGroup;
+			children = (
+				B4C76B5929324BEB005AD4AD /* GitClient.swift */,
+			);
+			path = Git;
+			sourceTree = "<group>";
+		};
+		B4C76B7729339FAF005AD4AD /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				B4C76B7829339FBF005AD4AD /* KeychainHelper.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -310,8 +387,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B4C76B2C293248A8005AD4AD /* ContentView.swift in Sources */,
-				B4C76B2A293248A8005AD4AD /* git_treeApp.swift in Sources */,
+				B4C76B742933936C005AD4AD /* RemoteCredentialsViewModel.swift in Sources */,
+				B4C76B6E29338FBA005AD4AD /* RemoteCredentialsModel.swift in Sources */,
+				B4C76B6A2933654C005AD4AD /* RepositoryViewModel.swift in Sources */,
+				B4C76B5D293258AA005AD4AD /* DocumentPicker.swift in Sources */,
+				B4C76B6829326AF9005AD4AD /* RepositoryView.swift in Sources */,
+				B4C76B64293267AA005AD4AD /* RepositoryInfoModel.swift in Sources */,
+				B4C76B722933922F005AD4AD /* RemoteCredentialsView.swift in Sources */,
+				B4C76B70293390E7005AD4AD /* IconWithText.swift in Sources */,
+				B4C76B2C293248A8005AD4AD /* RepositoryListView.swift in Sources */,
+				B4C76B6C293385E4005AD4AD /* RepositoryListViewModel.swift in Sources */,
+				B4C76B2A293248A8005AD4AD /* App.swift in Sources */,
+				B4C76B7629339E1E005AD4AD /* KeychainConfiguration.swift in Sources */,
+				B4C76B7929339FBF005AD4AD /* KeychainHelper.swift in Sources */,
 				B4C76B5A29324BEB005AD4AD /* GitClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -385,6 +473,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -405,6 +494,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "$(SRCROOT)/git-tree/ObjectiveGit-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -445,6 +535,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -458,6 +549,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "$(SRCROOT)/git-tree/ObjectiveGit-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -479,6 +571,9 @@
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				"HEADER_SEARCH_PATHS[arch=*]" = "$(SRCROOT)/Carthage/Build/iOS/ObjectiveGit.framework/Headers/";
+				INFOPLIST_FILE = "git-tree/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = GitTree;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -513,6 +608,9 @@
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				"HEADER_SEARCH_PATHS[arch=*]" = "$(SRCROOT)/Carthage/Build/iOS/ObjectiveGit.framework/Headers/";
+				INFOPLIST_FILE = "git-tree/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = GitTree;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
