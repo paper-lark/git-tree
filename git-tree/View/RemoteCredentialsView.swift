@@ -3,7 +3,7 @@ import SwiftUI
 struct RemoteCredentialsView: View {
     @Environment(\.dismiss) var dismiss
     @ObservedObject var credentials: RemoteCredentialsViewModel
-    
+
     var body: some View {
         Form {
             Section("Remote credentials") {
