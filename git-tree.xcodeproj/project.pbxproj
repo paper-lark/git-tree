@@ -30,6 +30,8 @@
 		B4C76B7929339FBF005AD4AD /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B7829339FBF005AD4AD /* KeychainHelper.swift */; };
 		B4C76B7B2933A4AC005AD4AD /* ChangedFileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B7A2933A4AC005AD4AD /* ChangedFileModel.swift */; };
 		B4C76B7D2933A559005AD4AD /* ChangedFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B7C2933A559005AD4AD /* ChangedFileView.swift */; };
+		B4C76B7F2933C241005AD4AD /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B7E2933C241005AD4AD /* Colors.swift */; };
+		B4C76B812933C5A2005AD4AD /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B802933C5A2005AD4AD /* SplashScreenView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +93,8 @@
 		B4C76B7829339FBF005AD4AD /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		B4C76B7A2933A4AC005AD4AD /* ChangedFileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangedFileModel.swift; sourceTree = "<group>"; };
 		B4C76B7C2933A559005AD4AD /* ChangedFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangedFileView.swift; sourceTree = "<group>"; };
+		B4C76B7E2933C241005AD4AD /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		B4C76B802933C5A2005AD4AD /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +203,7 @@
 				B4C76B7C2933A559005AD4AD /* ChangedFileView.swift */,
 				B4C76B6F293390E7005AD4AD /* IconWithText.swift */,
 				B4C76B712933922F005AD4AD /* RemoteCredentialsView.swift */,
+				B4C76B802933C5A2005AD4AD /* SplashScreenView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -236,6 +241,7 @@
 			isa = PBXGroup;
 			children = (
 				B4C76B7829339FBF005AD4AD /* KeychainHelper.swift */,
+				B4C76B7E2933C241005AD4AD /* Colors.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -396,6 +402,7 @@
 				B4C76B742933936C005AD4AD /* RemoteCredentialsViewModel.swift in Sources */,
 				B4C76B6E29338FBA005AD4AD /* RemoteCredentialsModel.swift in Sources */,
 				B4C76B6A2933654C005AD4AD /* RepositoryViewModel.swift in Sources */,
+				B4C76B7F2933C241005AD4AD /* Colors.swift in Sources */,
 				B4C76B5D293258AA005AD4AD /* DocumentPicker.swift in Sources */,
 				B4C76B6829326AF9005AD4AD /* RepositoryView.swift in Sources */,
 				B4C76B7D2933A559005AD4AD /* ChangedFileView.swift in Sources */,
@@ -403,6 +410,7 @@
 				B4C76B64293267AA005AD4AD /* RepositoryInfoModel.swift in Sources */,
 				B4C76B722933922F005AD4AD /* RemoteCredentialsView.swift in Sources */,
 				B4C76B70293390E7005AD4AD /* IconWithText.swift in Sources */,
+				B4C76B812933C5A2005AD4AD /* SplashScreenView.swift in Sources */,
 				B4C76B2C293248A8005AD4AD /* RepositoryListView.swift in Sources */,
 				B4C76B6C293385E4005AD4AD /* RepositoryListViewModel.swift in Sources */,
 				B4C76B2A293248A8005AD4AD /* App.swift in Sources */,

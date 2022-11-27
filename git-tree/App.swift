@@ -4,7 +4,7 @@ import SwiftUI
 struct GitTreeApp: App {
     var body: some Scene {
         WindowGroup {
-            RepositoryListView()
+            SplashScreenView()
         }
     }
 }
