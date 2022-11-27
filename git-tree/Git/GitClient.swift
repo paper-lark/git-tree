@@ -15,8 +15,7 @@ struct GitClient {
     
     static func getChangesForRepository(_ repository: GTRepository) -> [ChangedFileModel] {
         var files: Dictionary<URL, ChangedFileModel> = [:]
-       
-        var tree = try! repository.currentBranch().targetCommit().tree!
+        let tree = try! repository.currentBranch().targetCommit().tree!
         
         try! GTDiff(workingDirectoryFrom: tree, in: repository).enumerateDeltas { delta, _ in
             // get delta information

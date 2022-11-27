@@ -13,7 +13,6 @@ struct RepositoryView: View {
             
             List {
                 ForEach(vm.changedFiles) { file in
-                    // TODO: update on actions in repository
                     ChangedFileView(model: file)
                 }
             }.refreshable {

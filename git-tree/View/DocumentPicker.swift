@@ -24,8 +24,6 @@ class DocumentPickerCoordinator: NSObject, UIDocumentPickerDelegate, UINavigatio
     }
     
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        // NOTE: https://developer.apple.com/documentation/uikit/view_controllers/providing_access_to_directories
-        // TODO: store bookmark for later use
         for url in urls {
             vm.addRepository(fromLocalURL: url)
         }
