@@ -40,7 +40,7 @@ struct RepositoryListView: View {
                         Image(systemName: "plus")
                     }
                 )
-            }
+            }.navigationTitle("Repositories")
         }
     }
 }

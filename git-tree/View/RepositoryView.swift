@@ -2,29 +2,38 @@ import SwiftUI
 
 struct RepositoryView: View {
     @ObservedObject var vm: RepositoryViewModel
+    @State var commitMessage: String = ""
     
     var body: some View {
         VStack {
             HStack {
-                
+                Text("Branch: \(vm.currentBranch)")
+                Text("Commit: \(vm.headCommitSHA)")
             }
-            Text("Current branch: \(vm.currentBranch)")
-            Text("Latest commit: \(vm.headCommitSHA)")
-            Text("Changed files:")
+            
             List {
-                ForEach(vm.changedFiles, id: \.absoluteString) { url in
+                ForEach(vm.changedFiles) { file in
                     // TODO: update on actions in repository
-                    Text(url.relativePath)
+                    ChangedFileView(model: file)
                 }
             }.refreshable {
                 vm.updateHeadInfo()
             }
+            Divider()
+            HStack {
+                TextField("Commit message", text: $commitMessage)
+                Button("Commit") {
+                    vm.commitAll(message: commitMessage)
+                    commitMessage = ""
+                }
+                .keyboardShortcut(.return)
+                .disabled(vm.changedFiles.isEmpty)
+            }.padding()
         }
         .navigationTitle(vm.model.name)
         .toolbar {
-            Button("Commit all") { vm.commitAll() }
-            Button("Pull") { vm.pull() }
-            Button("Push") { vm.push() }
+            Button(action: { vm.pull() }, label: { IconWithText(systemIcon: "arrow.down.doc", text: "Pull") })
+            Button(action: { vm.push() }, label: { IconWithText(systemIcon: "arrow.up.doc", text: "Push") })
         }
     }
 }

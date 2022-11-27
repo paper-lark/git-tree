@@ -4,7 +4,7 @@ class RepositoryViewModel: ObservableObject {
     let model: RepositoryInfoModel
     let credentials: RemoteCredentialsModel
     
-    @Published var changedFiles: [URL] = []
+    @Published var changedFiles: [ChangedFileModel] = []
     @Published var currentBranch: String = ""
     @Published var headCommitSHA: String = ""
     
@@ -18,23 +18,13 @@ class RepositoryViewModel: ObservableObject {
         self.updateHeadInfo()
     }
     
-    func updateHeadInfo() {
-        changedFiles = GitClient.getChangesForRepository(model.repository)
-        
-        if let branch = try? model.repository.currentBranch() {
-            currentBranch = branch.name ?? ""
-            headCommitSHA = (try? branch.targetCommit().sha) ?? ""
-        }
-    }
-    
-    func commitAll() {
+    func commitAll(message: String) {
         let index = try! model.repository.index()
         try! index.addAll()
         let indexTree = try! index.writeTree()
         
         let parentCommit = try! model.repository.currentBranch().targetCommit()
-        let newCommit = try! model.repository.createCommit(with: indexTree, message: "update", parents: [parentCommit], updatingReferenceNamed: "HEAD")
-        print("Created commit \(newCommit.sha) after \(parentCommit.sha)")
+        try! model.repository.createCommit(with: indexTree, message: message, parents: [parentCommit], updatingReferenceNamed: "HEAD")
         updateHeadInfo()
     }
     
@@ -62,5 +52,14 @@ class RepositoryViewModel: ObservableObject {
                 try! GTCredential(userName: self.credentials.username, password: self.credentials.password)
             }
         ]
+    }
+    
+    func updateHeadInfo() {
+        changedFiles = GitClient.getChangesForRepository(model.repository)
+        
+        if let branch = try? model.repository.currentBranch() {
+            currentBranch = branch.name ?? ""
+            headCommitSHA = (try? branch.targetCommit().sha) ?? ""
+        }
     }
 }

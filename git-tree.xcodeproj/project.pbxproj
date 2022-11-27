@@ -28,6 +28,8 @@
 		B4C76B742933936C005AD4AD /* RemoteCredentialsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B732933936C005AD4AD /* RemoteCredentialsViewModel.swift */; };
 		B4C76B7629339E1E005AD4AD /* KeychainConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B7529339E1E005AD4AD /* KeychainConfiguration.swift */; };
 		B4C76B7929339FBF005AD4AD /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B7829339FBF005AD4AD /* KeychainHelper.swift */; };
+		B4C76B7B2933A4AC005AD4AD /* ChangedFileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B7A2933A4AC005AD4AD /* ChangedFileModel.swift */; };
+		B4C76B7D2933A559005AD4AD /* ChangedFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B7C2933A559005AD4AD /* ChangedFileView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +89,8 @@
 		B4C76B732933936C005AD4AD /* RemoteCredentialsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteCredentialsViewModel.swift; sourceTree = "<group>"; };
 		B4C76B7529339E1E005AD4AD /* KeychainConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainConfiguration.swift; sourceTree = "<group>"; };
 		B4C76B7829339FBF005AD4AD /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
+		B4C76B7A2933A4AC005AD4AD /* ChangedFileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangedFileModel.swift; sourceTree = "<group>"; };
+		B4C76B7C2933A559005AD4AD /* ChangedFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangedFileView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +196,7 @@
 				B4C76B5C293258AA005AD4AD /* DocumentPicker.swift */,
 				B4C76B2B293248A8005AD4AD /* RepositoryListView.swift */,
 				B4C76B6729326AF9005AD4AD /* RepositoryView.swift */,
+				B4C76B7C2933A559005AD4AD /* ChangedFileView.swift */,
 				B4C76B6F293390E7005AD4AD /* IconWithText.swift */,
 				B4C76B712933922F005AD4AD /* RemoteCredentialsView.swift */,
 			);
@@ -204,6 +209,7 @@
 				B4C76B63293267AA005AD4AD /* RepositoryInfoModel.swift */,
 				B4C76B6D29338FBA005AD4AD /* RemoteCredentialsModel.swift */,
 				B4C76B7529339E1E005AD4AD /* KeychainConfiguration.swift */,
+				B4C76B7A2933A4AC005AD4AD /* ChangedFileModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -392,6 +398,8 @@
 				B4C76B6A2933654C005AD4AD /* RepositoryViewModel.swift in Sources */,
 				B4C76B5D293258AA005AD4AD /* DocumentPicker.swift in Sources */,
 				B4C76B6829326AF9005AD4AD /* RepositoryView.swift in Sources */,
+				B4C76B7D2933A559005AD4AD /* ChangedFileView.swift in Sources */,
+				B4C76B7B2933A4AC005AD4AD /* ChangedFileModel.swift in Sources */,
 				B4C76B64293267AA005AD4AD /* RepositoryInfoModel.swift in Sources */,
 				B4C76B722933922F005AD4AD /* RemoteCredentialsView.swift in Sources */,
 				B4C76B70293390E7005AD4AD /* IconWithText.swift in Sources */,
