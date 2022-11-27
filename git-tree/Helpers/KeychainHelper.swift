@@ -15,7 +15,7 @@ class KeychainHelper {
     }
 
     func save(_ data: Data, service: String, account: String) {
-        // Add data to keychain
+        // add data to keychain
         let query =
             [
                 kSecValueData: data,
@@ -25,8 +25,10 @@ class KeychainHelper {
             ] as CFDictionary
         let status = SecItemAdd(query, nil)
 
-        // Check if already exists
-        if status == errSecDuplicateItem {
+        // proceess result
+        switch status {
+        case errSecDuplicateItem:
+            // data already exists
             let query =
                 [
                     kSecAttrService: service,
@@ -36,10 +38,13 @@ class KeychainHelper {
 
             let attributesToUpdate = [kSecValueData: data] as CFDictionary
             SecItemUpdate(query, attributesToUpdate)
-        }
 
-        // Check for unhandled errors
-        if status != errSecSuccess {
+        case errSecSuccess:
+            // success
+            print("Data saved to Keychain")
+
+        default:
+            // unknown error
             print("Failed to save data to Keychain: \(status)")
         }
     }
