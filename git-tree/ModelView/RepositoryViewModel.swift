@@ -34,7 +34,6 @@ class RepositoryViewModel: ObservableObject {
         let remote = try! GTRemote(name: "origin", in: model.repository)
         let currentBranch = try! model.repository.currentBranch()
 
-        // TODO: run async
         try! model.repository.pull(currentBranch, from: remote, withOptions: getRemoteOptions())
         updateHeadInfo()
     }
@@ -43,7 +42,6 @@ class RepositoryViewModel: ObservableObject {
         let currentBranch = try! model.repository.currentBranch()
         let remote = try! GTRemote(name: "origin", in: model.repository)
 
-        // TODO: run async
         try! model.repository.push(currentBranch, to: remote, withOptions: getRemoteOptions())
         updateHeadInfo()
     }

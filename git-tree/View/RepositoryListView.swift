@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct RepositoryListView: View {
-    @ObservedObject private var vm = RepositoryListViewModel().loadBookmarks()
+    @ObservedObject var vm: RepositoryListViewModel
 
     @State private var selection: String? = nil
     @State private var showRepositoryPicker = false
@@ -54,6 +54,6 @@ struct RepositoryListView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        RepositoryListView()
+        RepositoryListView(vm: RepositoryListViewModel())
     }
 }

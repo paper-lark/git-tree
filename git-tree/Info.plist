@@ -5,10 +5,7 @@
 	<key>UILaunchScreen</key>
 	<dict>
 		<key>UINavigationBar</key>
-		<dict>
-			<key>UIImageName</key>
-			<string></string>
-		</dict>
+		<dict/>
 		<key>UIImageName</key>
 		<string>Git</string>
 		<key>UIImageRespectsSafeAreaInsets</key>

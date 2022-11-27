@@ -3,6 +3,9 @@ import SwiftUI
 struct RepositoryView: View {
     @ObservedObject var vm: RepositoryViewModel
     @State var commitMessage: String = ""
+    @State var isPushing: Bool = false
+    @State var isPulling: Bool = false
+    @State var isCommitting: Bool = false
 
     var body: some View {
         VStack {
@@ -21,22 +24,47 @@ struct RepositoryView: View {
             Divider()
             HStack {
                 TextField("Commit message", text: $commitMessage)
-                Button("Commit") {
-                    vm.commitAll(message: commitMessage)
-                    commitMessage = ""
-                }
-                .keyboardShortcut(.return)
-                .disabled(vm.changedFiles.isEmpty)
+                Button("Commit") { commit() }
+                    .keyboardShortcut(.return)
+                    .disabled(isCommitting || vm.changedFiles.isEmpty)
             }.padding()
         }
         .navigationTitle(vm.model.name)
         .toolbar {
             Button(
-                action: { vm.pull() },
-                label: { IconWithText(systemIcon: "arrow.down.doc", text: "Pull") })
+                action: { pull() },
+                label: { IconWithText(systemIcon: "arrow.down.doc", text: "Pull") }
+            ).disabled(isPulling)
             Button(
-                action: { vm.push() },
-                label: { IconWithText(systemIcon: "arrow.up.doc", text: "Push") })
+                action: { push() },
+                label: { IconWithText(systemIcon: "arrow.up.doc", text: "Push") }
+            ).disabled(isPushing)
+        }
+    }
+
+    private func commit() {
+        isCommitting = true
+        let message = commitMessage
+        commitMessage = ""
+        DispatchQueue.main.async {
+            vm.commitAll(message: message)
+            isCommitting = false
+        }
+    }
+
+    private func pull() {
+        isPulling = true
+        DispatchQueue.main.async {
+            vm.pull()
+            isPulling = false
+        }
+    }
+
+    private func push() {
+        isPushing = true
+        DispatchQueue.main.async {
+            vm.push()
+            isPushing = false
         }
     }
 }

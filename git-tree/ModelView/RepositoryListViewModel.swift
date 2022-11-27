@@ -12,7 +12,7 @@ class RepositoryListViewModel: ObservableObject {
     }
     @Published var repositories: [RepositoryInfoModel] = []
 
-    func loadBookmarks() -> Self {
+    func loadBookmarks() {
         let currentBookmarks = self.repositoryBookmarks
         self.repositories = []
         self.repositoryBookmarks = [:]
@@ -29,8 +29,6 @@ class RepositoryListViewModel: ObservableObject {
             print("Loaded bookmarked repository: \(localURL.absoluteString)")
             self.addRepository(fromLocalURL: localURL)
         }
-
-        return self
     }
 
     func addRepository(fromLocalURL localURL: URL, withBookmark: Bool = true) {

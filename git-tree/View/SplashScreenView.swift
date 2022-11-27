@@ -1,18 +1,23 @@
 import SwiftUI
 
 struct SplashScreenView: View {
-    @State var isActive: Bool = false
+    @State var isLoaded: Bool = false
+    private var vm = RepositoryListViewModel()
 
     var body: some View {
-        if self.isActive {
-            RepositoryListView()
+        if self.isLoaded {
+            RepositoryListView(vm: vm)
         } else {
             VStack {
                 Image("Git")
             }.onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                DispatchQueue.main.async {
+                    // load repository data
+                    vm.loadBookmarks()
+
+                    // proceed to
                     withAnimation {
-                        self.isActive = true
+                        self.isLoaded = true
                     }
                 }
             }
