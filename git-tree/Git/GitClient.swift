@@ -3,6 +3,14 @@ import Foundation
 struct GitClient {
     static let gitFolder = ".git"
 
+    static func clone(fromRemoteURL: URL, toLocalURL: URL, username: String, password: String)
+        -> GTRepository?
+    {
+        return try! GTRepository.clone(
+            from: fromRemoteURL, toWorkingDirectory: toLocalURL,
+            options: getCloneRemoteOptions(username: username, password: password))
+    }
+
     static func getRepository(localPath: URL) -> GTRepository? {
         do {
             let repositoryFolder =
@@ -60,5 +68,15 @@ struct GitClient {
             return nil
         }
         return URL.init(filePath: filePath, relativeTo: relativeTo)
+    }
+
+    static func getCloneRemoteOptions(username: String, password: String) -> [String: Any] {
+        return [
+            GTRepositoryCloneOptionsCredentialProvider: GTCredentialProvider {
+                _, _, _ in
+                try! GTCredential(
+                    userName: username, password: password)
+            }
+        ]
     }
 }

@@ -31,21 +31,27 @@ class RepositoryListViewModel: ObservableObject {
         }
     }
 
-    func addRepository(fromLocalURL localURL: URL, withBookmark: Bool = true) {
+    func addRepository(
+        fromRemoteURL remoteURL: URL, toLocalURL localURL: URL, credentials: RemoteCredentialsModel
+    ) {
+        guard repositories.firstIndex(where: { $0.localPath == remoteURL }) == nil else {
+            return
+        }
+
+        if let newRepository = RepositoryInfoModel.clone(
+            fromRemoteURL: remoteURL, toLocalPath: localURL, credentials: credentials)
+        {
+            addRepository(newRepository)
+        }
+    }
+
+    func addRepository(fromLocalURL localURL: URL) {
         guard repositories.firstIndex(where: { $0.localPath == localURL }) == nil else {
             return
         }
 
         if let newRepository = RepositoryInfoModel.initWith(localPath: localURL) {
-            repositories.append(newRepository)
-
-            if withBookmark {
-                if let bookmarkData = try? localURL.bookmarkData(
-                    options: .minimalBookmark, includingResourceValuesForKeys: nil, relativeTo: nil)
-                {
-                    repositoryBookmarks[localURL.absoluteString] = bookmarkData
-                }
-            }
+            addRepository(newRepository)
         }
     }
 
@@ -55,4 +61,22 @@ class RepositoryListViewModel: ObservableObject {
         }
         repositoryBookmarks.removeValue(forKey: localURL.absoluteString)
     }
+
+    private func addRepository(_ model: RepositoryInfoModel) {
+        repositories.append(newRepository)
+
+        if let bookmarkData = try? localURL.bookmarkData(
+            options: .minimalBookmark, includingResourceValuesForKeys: nil, relativeTo: nil)
+        {
+            repositoryBookmarks[localURL.absoluteString] = bookmarkData
+        }
+    }
+}
+
+// TODO: move to helpers
+func stripFileExtension(_ filename: String) -> String {
+    var components = filename.components(separatedBy: ".")
+    guard components.count > 1 else { return filename }
+    components.removeLast()
+    return components.joined(separator: ".")
 }

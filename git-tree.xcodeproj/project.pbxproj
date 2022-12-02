@@ -17,7 +17,7 @@
 		B4C76B5529324B0B005AD4AD /* ObjectiveGit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4C76B5429324B0A005AD4AD /* ObjectiveGit.framework */; };
 		B4C76B5629324B0B005AD4AD /* ObjectiveGit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B4C76B5429324B0A005AD4AD /* ObjectiveGit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B4C76B5A29324BEB005AD4AD /* GitClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B5929324BEB005AD4AD /* GitClient.swift */; };
-		B4C76B5D293258AA005AD4AD /* DocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B5C293258AA005AD4AD /* DocumentPicker.swift */; };
+		B4C76B5D293258AA005AD4AD /* DocumentPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B5C293258AA005AD4AD /* DocumentPickerView.swift */; };
 		B4C76B64293267AA005AD4AD /* RepositoryInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B63293267AA005AD4AD /* RepositoryInfoModel.swift */; };
 		B4C76B6829326AF9005AD4AD /* RepositoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B6729326AF9005AD4AD /* RepositoryView.swift */; };
 		B4C76B6A2933654C005AD4AD /* RepositoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B692933654C005AD4AD /* RepositoryViewModel.swift */; };
@@ -32,6 +32,10 @@
 		B4C76B7D2933A559005AD4AD /* ChangedFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B7C2933A559005AD4AD /* ChangedFileView.swift */; };
 		B4C76B7F2933C241005AD4AD /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B7E2933C241005AD4AD /* Colors.swift */; };
 		B4C76B812933C5A2005AD4AD /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B802933C5A2005AD4AD /* SplashScreenView.swift */; };
+		B4C76B852939CAAF005AD4AD /* CloneRemoteRepositoryScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B842939CAAF005AD4AD /* CloneRemoteRepositoryScreenView.swift */; };
+		B4C76B872939CF00005AD4AD /* RemoteCredentialsScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B862939CF00005AD4AD /* RemoteCredentialsScreenView.swift */; };
+		B4C76B892939D051005AD4AD /* RemoteRepositoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B882939D051005AD4AD /* RemoteRepositoryView.swift */; };
+		B4C7CC612939DCBB00250EA6 /* AddRepositoryScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C7CC602939DCBB00250EA6 /* AddRepositoryScreenView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,7 +83,7 @@
 		B4C76B5429324B0A005AD4AD /* ObjectiveGit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjectiveGit.framework; path = Carthage/Build/iOS/ObjectiveGit.framework; sourceTree = "<group>"; };
 		B4C76B5929324BEB005AD4AD /* GitClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitClient.swift; sourceTree = "<group>"; };
 		B4C76B5B29324EFF005AD4AD /* ObjectiveGit-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ObjectiveGit-Bridging-Header.h"; sourceTree = "<group>"; };
-		B4C76B5C293258AA005AD4AD /* DocumentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPicker.swift; sourceTree = "<group>"; };
+		B4C76B5C293258AA005AD4AD /* DocumentPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPickerView.swift; sourceTree = "<group>"; };
 		B4C76B612932673C005AD4AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B4C76B63293267AA005AD4AD /* RepositoryInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryInfoModel.swift; sourceTree = "<group>"; };
 		B4C76B6729326AF9005AD4AD /* RepositoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryView.swift; sourceTree = "<group>"; };
@@ -95,6 +99,10 @@
 		B4C76B7C2933A559005AD4AD /* ChangedFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangedFileView.swift; sourceTree = "<group>"; };
 		B4C76B7E2933C241005AD4AD /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		B4C76B802933C5A2005AD4AD /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
+		B4C76B842939CAAF005AD4AD /* CloneRemoteRepositoryScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloneRemoteRepositoryScreenView.swift; sourceTree = "<group>"; };
+		B4C76B862939CF00005AD4AD /* RemoteCredentialsScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteCredentialsScreenView.swift; sourceTree = "<group>"; };
+		B4C76B882939D051005AD4AD /* RemoteRepositoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteRepositoryView.swift; sourceTree = "<group>"; };
+		B4C7CC602939DCBB00250EA6 /* AddRepositoryScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRepositoryScreenView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,13 +205,17 @@
 		B4C76B5E293266F2005AD4AD /* View */ = {
 			isa = PBXGroup;
 			children = (
-				B4C76B5C293258AA005AD4AD /* DocumentPicker.swift */,
+				B4C76B5C293258AA005AD4AD /* DocumentPickerView.swift */,
+				B4C7CC602939DCBB00250EA6 /* AddRepositoryScreenView.swift */,
 				B4C76B2B293248A8005AD4AD /* RepositoryListView.swift */,
 				B4C76B6729326AF9005AD4AD /* RepositoryView.swift */,
 				B4C76B7C2933A559005AD4AD /* ChangedFileView.swift */,
 				B4C76B6F293390E7005AD4AD /* IconWithText.swift */,
 				B4C76B712933922F005AD4AD /* RemoteCredentialsView.swift */,
+				B4C76B862939CF00005AD4AD /* RemoteCredentialsScreenView.swift */,
 				B4C76B802933C5A2005AD4AD /* SplashScreenView.swift */,
+				B4C76B842939CAAF005AD4AD /* CloneRemoteRepositoryScreenView.swift */,
+				B4C76B882939D051005AD4AD /* RemoteRepositoryView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -403,19 +415,23 @@
 				B4C76B6E29338FBA005AD4AD /* RemoteCredentialsModel.swift in Sources */,
 				B4C76B6A2933654C005AD4AD /* RepositoryViewModel.swift in Sources */,
 				B4C76B7F2933C241005AD4AD /* Colors.swift in Sources */,
-				B4C76B5D293258AA005AD4AD /* DocumentPicker.swift in Sources */,
+				B4C76B5D293258AA005AD4AD /* DocumentPickerView.swift in Sources */,
 				B4C76B6829326AF9005AD4AD /* RepositoryView.swift in Sources */,
 				B4C76B7D2933A559005AD4AD /* ChangedFileView.swift in Sources */,
 				B4C76B7B2933A4AC005AD4AD /* ChangedFileModel.swift in Sources */,
 				B4C76B64293267AA005AD4AD /* RepositoryInfoModel.swift in Sources */,
+				B4C76B852939CAAF005AD4AD /* CloneRemoteRepositoryScreenView.swift in Sources */,
 				B4C76B722933922F005AD4AD /* RemoteCredentialsView.swift in Sources */,
+				B4C76B872939CF00005AD4AD /* RemoteCredentialsScreenView.swift in Sources */,
 				B4C76B70293390E7005AD4AD /* IconWithText.swift in Sources */,
 				B4C76B812933C5A2005AD4AD /* SplashScreenView.swift in Sources */,
 				B4C76B2C293248A8005AD4AD /* RepositoryListView.swift in Sources */,
 				B4C76B6C293385E4005AD4AD /* RepositoryListViewModel.swift in Sources */,
+				B4C76B892939D051005AD4AD /* RemoteRepositoryView.swift in Sources */,
 				B4C76B2A293248A8005AD4AD /* App.swift in Sources */,
 				B4C76B7629339E1E005AD4AD /* KeychainConfiguration.swift in Sources */,
 				B4C76B7929339FBF005AD4AD /* KeychainHelper.swift in Sources */,
+				B4C7CC612939DCBB00250EA6 /* AddRepositoryScreenView.swift in Sources */,
 				B4C76B5A29324BEB005AD4AD /* GitClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

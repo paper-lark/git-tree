@@ -4,8 +4,9 @@ struct RepositoryListView: View {
     @ObservedObject var vm: RepositoryListViewModel
 
     @State private var selection: String? = nil
-    @State private var showRepositoryPicker = false
+    @State private var showAddRepository = false
     @State private var showCredentialsEditor = false
+    @State private var showCloneRepository = false
 
     var body: some View {
         NavigationView {
@@ -26,27 +27,42 @@ struct RepositoryListView: View {
                     }
                 }
             }
-            .sheet(isPresented: $showRepositoryPicker) {
-                DocumentPicker(vm: vm)
+            .sheet(isPresented: $showAddRepository) {
+                AddRepositoryScreenView(vm: vm)
             }
             .sheet(
                 isPresented: $showCredentialsEditor, onDismiss: { vm.credentials.persist() },
                 content: {
-                    RemoteCredentialsView(credentials: vm.credentials)
+                    RemoteCredentialsScreenView(credentials: vm.credentials)
                 }
             )
+            .sheet(
+                isPresented: $showCloneRepository
+            ) {
+                CloneRemoteRepositoryScreenView(vm: vm)
+            }
             .toolbar {
                 Button(
                     action: { showCredentialsEditor = true },
                     label: {
                         Image(systemName: "person")
                     })
-                Button(
-                    action: { showRepositoryPicker = true },
-                    label: {
-                        Image(systemName: "plus")
+                Menu {
+                    Button {
+                        showAddRepository = true
+                    } label: {
+                        Text("Add local repository")
+                        Image(systemName: "folder")
                     }
-                )
+                    Button {
+                        showCloneRepository = true
+                    } label: {
+                        Text("Add remote repository")
+                        Image(systemName: "globe")
+                    }
+                } label: {
+                    Image(systemName: "plus")
+                }
             }.navigationTitle("Repositories")
         }
     }
