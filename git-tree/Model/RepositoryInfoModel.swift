@@ -46,13 +46,16 @@ struct RepositoryInfoModel: Identifiable {
         localPath.stopAccessingSecurityScopedResource()
     }
 
-    func checkout(branch: String) {
+    func checkout(branch: String) -> Bool {
         guard let branch = try? repository.localBranches().first(where: { $0.name == branch })
         else {
-            return
+            return false
         }
+
         let commit = try! branch.targetCommit()
         try! repository.checkoutCommit(commit, options: nil)
         try! repository.moveHEAD(to: branch.reference)
+
+        return true
     }
 }

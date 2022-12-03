@@ -8,11 +8,19 @@ struct RepositoryView: View {
     @State var isCommitting: Bool = false
 
     var body: some View {
-        VStack {
-            HStack {
-                Text("Branch: \(vm.currentBranch)")
-                Text("Commit: \(vm.headCommitSHA)")
-            }
+        VStack(alignment: .leading) {
+            VStack(alignment: .leading) {
+                HStack(alignment: .firstTextBaseline) {
+                    Text("Branch:")
+                    Picker(selection: $vm.currentBranch, label: Text("Branch")) {
+                        ForEach(vm.localBranches, id: \.self) { branch in
+                            Text(branch).tag(branch)
+                        }
+                    }
+                    .onChange(of: vm.currentBranch, perform: { _ in vm.updateHeadInfo() })
+                }
+                Text("Latest commit: \(vm.headCommitSHA)")
+            }.padding()
 
             List {
                 ForEach(vm.changedFiles) { file in

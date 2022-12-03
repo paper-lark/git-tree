@@ -7,6 +7,7 @@ class RepositoryViewModel: ObservableObject {
     @Published var changedFiles: [ChangedFileModel] = []
     @Published var currentBranch: String = ""
     @Published var headCommitSHA: String = ""
+    @Published var localBranches: [String] = []
 
     init(model: RepositoryInfoModel, credentials: RemoteCredentialsModel) {
         self.model = model
@@ -14,6 +15,7 @@ class RepositoryViewModel: ObservableObject {
         self.changedFiles = []
         self.currentBranch = ""
         self.headCommitSHA = ""
+        self.localBranches = []
 
         self.updateHeadInfo()
     }
@@ -57,12 +59,12 @@ class RepositoryViewModel: ObservableObject {
     func updateHeadInfo() {
         try! model.checkout(branch: model.repository.localBranches().first!.name!)
         try! model.repository.index().addAll()
-        changedFiles = GitClient.getChangesForRepository(model.repository)
 
-        if let branch = try? model.repository.currentBranch() {
-            print(branch)
-            currentBranch = branch.name ?? ""
-            headCommitSHA = (try? branch.targetCommit().sha) ?? ""
-        }
+        changedFiles = GitClient.getChangesForRepository(model.repository)
+        localBranches = try! model.repository.localBranches().compactMap { $0.name }
+
+        let branch = try! model.repository.currentBranch()
+        currentBranch = branch.name ?? ""
+        headCommitSHA = try! branch.targetCommit().sha
     }
 }
