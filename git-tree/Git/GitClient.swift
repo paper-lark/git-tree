@@ -25,39 +25,28 @@ struct GitClient {
 
     static func getChangesForRepository(_ repository: GTRepository) -> [ChangedFileModel] {
         var files: [URL: ChangedFileModel] = [:]
-        let tree = try! repository.currentBranch().targetCommit().tree!
 
-        try! GTDiff(workingDirectoryFrom: tree, in: repository).enumerateDeltas { delta, _ in
-            // get delta information
-            let leftFile = getFileURL(file: delta.oldFile, relativeTo: repository.fileURL)
-            let rightFile = getFileURL(file: delta.newFile, relativeTo: repository.fileURL)
-            let patch = try! delta.generatePatch()
-
-            // infer file and change type
-            let fileURL: URL
-            let changeType: FileChangeType
-            if rightFile != nil {
-                changeType =
-                    leftFile == nil
-                    ? FileChangeType.added
-                    : (leftFile != rightFile ? FileChangeType.renamed : FileChangeType.modified)
-                fileURL = rightFile!
-            } else if leftFile != nil {
-                changeType = FileChangeType.deleted
-                fileURL = leftFile!
-            } else {
+        func process(delta: GTStatusDelta) {
+            let changeType = FileChangeType.fromDeltaType(delta.status)
+            let oldFileURL = getFileURL(file: delta.newFile, relativeTo: repository.fileURL)
+            let newFileURL = getFileURL(file: delta.oldFile, relativeTo: repository.fileURL)
+            guard let key = newFileURL ?? oldFileURL else {
                 return
             }
 
-            // update model
-            let model =
-                files[fileURL]
-                ?? ChangedFileModel(
-                    fileURL: fileURL, changeType: changeType, linesAdded: 0, linesDeleted: 0)
-            files[fileURL] = ChangedFileModel(
-                fileURL: model.fileURL, changeType: model.changeType,
-                linesAdded: model.linesAdded + patch.addedLinesCount,
-                linesDeleted: model.linesDeleted + patch.deletedLinesCount)
+            files[key] = ChangedFileModel(
+                oldFileURL: oldFileURL,
+                newFileURL: newFileURL,
+                changeType: changeType)
+        }
+
+        try! repository.enumerateFileStatus(options: nil) { headToIndex, indexToWorkingDir, _ in
+            if let diff = headToIndex {
+                process(delta: diff)
+            }
+            if let diff = indexToWorkingDir {
+                process(delta: diff)
+            }
         }
 
         return files.sorted { $0.key.relativePath < $1.key.relativePath }.map { $0.value }

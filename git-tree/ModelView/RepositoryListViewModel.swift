@@ -62,13 +62,13 @@ class RepositoryListViewModel: ObservableObject {
         repositoryBookmarks.removeValue(forKey: localURL.absoluteString)
     }
 
-    private func addRepository(_ model: RepositoryInfoModel) {
+    private func addRepository(_ newRepository: RepositoryInfoModel) {
         repositories.append(newRepository)
 
-        if let bookmarkData = try? localURL.bookmarkData(
+        if let bookmarkData = try? newRepository.localPath.bookmarkData(
             options: .minimalBookmark, includingResourceValuesForKeys: nil, relativeTo: nil)
         {
-            repositoryBookmarks[localURL.absoluteString] = bookmarkData
+            repositoryBookmarks[newRepository.localPath.absoluteString] = bookmarkData
         }
     }
 }

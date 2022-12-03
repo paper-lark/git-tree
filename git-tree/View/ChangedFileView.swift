@@ -5,40 +5,82 @@ struct ChangedFileView: View {
 
     var body: some View {
         HStack(alignment: .lastTextBaseline) {
-            changeType
-            Text(model.fileURL.relativePath)
+            if let oldFileURL = model.oldFileURL {
+                if model.newFileURL != oldFileURL {
+                    Text(oldFileURL.relativePath)
+                }
+            }
+
+            if model.oldFileURL != nil && model.newFileURL != nil
+                && model.oldFileURL != model.newFileURL
+            {
+                Image(systemName: "arrow.right")
+            }
+
+            if let newFileURL = model.newFileURL {
+                Text(newFileURL.relativePath)
+            }
             Spacer()
-            lines
-        }
+            changeType.bold().font(.body.monospaced()).padding(.leading, 16)
+        }.lineLimit(1)
     }
 
     private var changeType: some View {
         switch model.changeType {
         case .modified:
-            return Text("M").foregroundColor(.orange).bold()
-        case .deleted:
-            return Text("D").foregroundColor(.red).bold()
-        case .added:
-            return Text("A").foregroundColor(.green).bold()
+            return Text("M").foregroundColor(.orange)
+        case .typeChange:
+            return Text("T").foregroundColor(.orange)
         case .renamed:
-            return Text("R").foregroundColor(.orange).bold()
-        }
-    }
+            return Text("R").foregroundColor(.orange)
 
-    private var lines: some View {
-        HStack {
-            Text("+\(model.linesAdded)").foregroundColor(.green)
-            Text("/").foregroundColor(.secondary)
-            Text("-\(model.linesDeleted)").foregroundColor(.red)
+        case .added:
+            return Text("A").foregroundColor(.green)
+        case .copied:
+            return Text("C").foregroundColor(.green)
+        case .unmodified:
+            return Text("U").foregroundColor(.gray)
+
+        case .ignored:
+            return Text("I").foregroundColor(.gray)
+        case .untracked:
+            return Text("U").foregroundColor(.gray)
+
+        case .deleted:
+            return Text("D").foregroundColor(.red)
+        case .unreadable:
+            return Text("U").foregroundColor(.red)
+        case .conflicted:
+            return Text("C").foregroundColor(.red)
         }
     }
 }
 
 struct ChangedFileView_Previews: PreviewProvider {
     static var previews: some View {
-        let model = ChangedFileModel(
-            fileURL: URL(filePath: "test.txt"), changeType: .modified, linesAdded: 10,
-            linesDeleted: 20)
-        ChangedFileView(model: model)
+        let models = [
+            ChangedFileModel(
+                oldFileURL: URL(filePath: "long/long/long/long/long/long/test.txt"),
+                newFileURL: URL(filePath: "test.md"),
+                changeType: .renamed),
+            ChangedFileModel(
+                oldFileURL: URL(filePath: "test2.txt"),
+                newFileURL: URL(filePath: "test2.txt"),
+                changeType: .modified),
+            ChangedFileModel(
+                oldFileURL: URL(filePath: "test3.txt"),
+                newFileURL: nil,
+                changeType: .deleted),
+            ChangedFileModel(
+                oldFileURL: nil,
+                newFileURL: URL(filePath: "test3.txt"),
+                changeType: .added),
+        ]
+
+        List {
+            ForEach(models) { model in
+                ChangedFileView(model: model)
+            }
+        }
     }
 }

@@ -19,11 +19,9 @@ class RepositoryViewModel: ObservableObject {
     }
 
     func commitAll(message: String) {
-        let index = try! model.repository.index()
-        try! index.addAll()
-        let indexTree = try! index.writeTree()
-
+        let indexTree = try! model.repository.index().writeTree()
         let parentCommit = try! model.repository.currentBranch().targetCommit()
+
         try! model.repository.createCommit(
             with: indexTree, message: message, parents: [parentCommit],
             updatingReferenceNamed: "HEAD")
@@ -57,9 +55,12 @@ class RepositoryViewModel: ObservableObject {
     }
 
     func updateHeadInfo() {
+        try! model.checkout(branch: model.repository.localBranches().first!.name!)
+        try! model.repository.index().addAll()
         changedFiles = GitClient.getChangesForRepository(model.repository)
 
         if let branch = try? model.repository.currentBranch() {
+            print(branch)
             currentBranch = branch.name ?? ""
             headCommitSHA = (try? branch.targetCommit().sha) ?? ""
         }
