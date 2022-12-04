@@ -79,7 +79,7 @@ class RepositoryViewModel: ObservableObject {
         let opts = self.getRemoteOptions()
 
         DispatchQueue.global(qos: .background).async {
-            let remote = try! GTRemote(name: "origin", in: model.repository)
+            let remote = try! GTRemote(name: "origin", in: model.repository)  // TODO: select remote
             let currentBranch = try! model.repository.currentBranch()
 
             try! model.repository.pull(currentBranch, from: remote, withOptions: opts) {
@@ -120,6 +120,31 @@ class RepositoryViewModel: ObservableObject {
                         op.updateProgress(current: Float(current) / min(Float(total), 1))
                     }
                 }
+            }
+
+            DispatchQueue.main.async {
+                self.updateHeadInfo()
+                self.currentOperation = nil
+            }
+        }
+    }
+
+    func resetToRemote() {
+        guard currentOperation == nil else {
+            return
+        }
+        currentOperation = RepositoryAsyncOperation(kind: .reset)
+
+        let model = self.model
+
+        DispatchQueue.global(qos: .background).async {
+            let currentBranch = try! model.repository.currentBranch()
+
+            var error: NSError? = nil
+            if let remoteBranch = currentBranch.trackingBranchWithError(&error, success: nil),
+                error == nil
+            {
+                try! model.repository.reset(to: remoteBranch.targetCommit(), resetType: .soft)
             }
 
             DispatchQueue.main.async {

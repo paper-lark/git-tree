@@ -1,7 +1,7 @@
 import SwiftUI
 
 enum RepositoryAsyncOperationKind {
-    case push, pull, commit
+    case push, pull, commit, reset
 }
 
 class RepositoryAsyncOperation: ObservableObject {

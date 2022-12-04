@@ -19,6 +19,9 @@ struct RepositoryAsyncOperationView: View {
 
         case .commit:
             return "Commiting changes"
+
+        case .reset:
+            return "Resetting changes"
         }
     }
 }

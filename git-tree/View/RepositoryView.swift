@@ -42,6 +42,10 @@ struct RepositoryView: View {
         .navigationTitle(vm.model.name)
         .toolbar {
             Button(
+                action: { vm.resetToRemote() },
+                label: { IconWithText(systemIcon: "doc.badge.gearshape", text: "Reset") }
+            ).disabled(vm.currentOperation != nil)
+            Button(
                 action: { vm.pull() },
                 label: { IconWithText(systemIcon: "arrow.down.doc", text: "Pull") }
             ).disabled(vm.currentOperation != nil)
