@@ -8,6 +8,8 @@ class RepositoryViewModel: ObservableObject {
     @Published var currentBranch: String = ""
     @Published var headCommitSHA: String = ""
     @Published var localBranches: [String] = []
+    @Published var currentOperation: RepositoryAsyncOperation? = nil
+    @Published var commitMessage: String = ""
 
     init(model: RepositoryInfoModel, credentials: RemoteCredentialsModel) {
         self.model = model
@@ -18,32 +20,6 @@ class RepositoryViewModel: ObservableObject {
         self.localBranches = []
 
         self.updateHeadInfo()
-    }
-
-    func commitAll(message: String) {
-        let indexTree = try! model.repository.index().writeTree()
-        let parentCommit = try! model.repository.currentBranch().targetCommit()
-
-        try! model.repository.createCommit(
-            with: indexTree, message: message, parents: [parentCommit],
-            updatingReferenceNamed: "HEAD")
-        updateHeadInfo()
-    }
-
-    func pull() {
-        let remote = try! GTRemote(name: "origin", in: model.repository)
-        let currentBranch = try! model.repository.currentBranch()
-
-        try! model.repository.pull(currentBranch, from: remote, withOptions: getRemoteOptions())
-        updateHeadInfo()
-    }
-
-    func push() {
-        let currentBranch = try! model.repository.currentBranch()
-        let remote = try! GTRemote(name: "origin", in: model.repository)
-
-        try! model.repository.push(currentBranch, to: remote, withOptions: getRemoteOptions())
-        updateHeadInfo()
     }
 
     func getRemoteOptions() -> [String: Any] {
@@ -66,5 +42,90 @@ class RepositoryViewModel: ObservableObject {
         let branch = try! model.repository.currentBranch()
         currentBranch = branch.name ?? ""
         headCommitSHA = try! branch.targetCommit().sha
+    }
+
+    func commit() {
+        guard currentOperation == nil else {
+            return
+        }
+        currentOperation = RepositoryAsyncOperation(kind: .commit)
+
+        let message = commitMessage
+        commitMessage = ""
+        let model = self.model
+
+        DispatchQueue.global(qos: .background).async {
+            let indexTree = try! model.repository.index().writeTree()
+            let parentCommit = try! model.repository.currentBranch().targetCommit()
+
+            try! model.repository.createCommit(
+                with: indexTree, message: message, parents: [parentCommit],
+                updatingReferenceNamed: "HEAD")
+
+            DispatchQueue.main.async {
+                self.updateHeadInfo()
+                self.currentOperation = nil
+            }
+        }
+    }
+
+    func pull() {
+        guard currentOperation == nil else {
+            return
+        }
+        let op = RepositoryAsyncOperation(kind: .pull, currentProgress: 0)
+        currentOperation = op
+        let model = self.model
+        let opts = self.getRemoteOptions()
+
+        DispatchQueue.global(qos: .background).async {
+            let remote = try! GTRemote(name: "origin", in: model.repository)
+            let currentBranch = try! model.repository.currentBranch()
+
+            try! model.repository.pull(currentBranch, from: remote, withOptions: opts) {
+                progress, _ in
+                if let op = self.currentOperation {
+                    DispatchQueue.main.async {
+                        op.updateProgress(
+                            current: Float(progress.pointee.received_objects)
+                                / min(Float(progress.pointee.received_objects), 1))
+                    }
+                }
+            }
+
+            DispatchQueue.main.async {
+                self.updateHeadInfo()
+                self.currentOperation = nil
+            }
+        }
+    }
+
+    func push() {
+        guard currentOperation == nil else {
+            return
+        }
+        currentOperation = RepositoryAsyncOperation(kind: .push)
+
+        let model = self.model
+        let opts = self.getRemoteOptions()
+
+        DispatchQueue.global(qos: .background).async {
+            let currentBranch = try! model.repository.currentBranch()
+            let remote = try! GTRemote(name: "origin", in: model.repository)
+
+            try! model.repository.push(currentBranch, to: remote, withOptions: opts) {
+                current, total, _, _ in
+                if let op = self.currentOperation {
+                    DispatchQueue.main.async {
+                        op.updateProgress(current: Float(current) / min(Float(total), 1))
+                    }
+                }
+            }
+
+            DispatchQueue.main.async {
+                self.updateHeadInfo()
+                self.currentOperation = nil
+            }
+        }
     }
 }

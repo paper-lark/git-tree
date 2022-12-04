@@ -2,10 +2,6 @@ import SwiftUI
 
 struct RepositoryView: View {
     @ObservedObject var vm: RepositoryViewModel
-    @State var commitMessage: String = ""
-    @State var isPushing: Bool = false
-    @State var isPulling: Bool = false
-    @State var isCommitting: Bool = false
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -20,7 +16,13 @@ struct RepositoryView: View {
                     .onChange(of: vm.currentBranch, perform: { _ in vm.updateHeadInfo() })
                 }
                 Text("Latest commit: \(vm.headCommitSHA)")
+
+                if let op = vm.currentOperation {
+                    RepositoryAsyncOperationView(operation: op).padding(.top)
+                }
             }.padding()
+
+            Divider()
 
             List {
                 ForEach(vm.changedFiles) { file in
@@ -31,48 +33,22 @@ struct RepositoryView: View {
             }
             Divider()
             HStack {
-                TextField("Commit message", text: $commitMessage)
-                Button("Commit") { commit() }
+                TextField("Commit message", text: $vm.commitMessage)
+                Button("Commit") { vm.commit() }
                     .keyboardShortcut(.return)
-                    .disabled(isCommitting || vm.changedFiles.isEmpty)
+                    .disabled(vm.currentOperation != nil || vm.changedFiles.isEmpty)
             }.padding()
         }
         .navigationTitle(vm.model.name)
         .toolbar {
             Button(
-                action: { pull() },
+                action: { vm.pull() },
                 label: { IconWithText(systemIcon: "arrow.down.doc", text: "Pull") }
-            ).disabled(isPulling)
+            ).disabled(vm.currentOperation != nil)
             Button(
-                action: { push() },
+                action: { vm.push() },
                 label: { IconWithText(systemIcon: "arrow.up.doc", text: "Push") }
-            ).disabled(isPushing)
-        }
-    }
-
-    private func commit() {
-        isCommitting = true
-        let message = commitMessage
-        commitMessage = ""
-        DispatchQueue.main.async {
-            vm.commitAll(message: message)
-            isCommitting = false
-        }
-    }
-
-    private func pull() {
-        isPulling = true
-        DispatchQueue.main.async {
-            vm.pull()
-            isPulling = false
-        }
-    }
-
-    private func push() {
-        isPushing = true
-        DispatchQueue.main.async {
-            vm.push()
-            isPushing = false
+            ).disabled(vm.currentOperation != nil)
         }
     }
 }
