@@ -35,11 +35,12 @@ enum FileChangeType {
 }
 
 struct ChangedFileModel: Identifiable, Hashable {
+    let fileURL: URL
     let oldFileURL: URL?
     let newFileURL: URL?
     let changeType: FileChangeType
 
     var id: String {
-        "\(oldFileURL?.absoluteString ?? "")/\(newFileURL?.absoluteString ?? "")"
+        return fileURL.absoluteString
     }
 }

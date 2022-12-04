@@ -60,18 +60,22 @@ struct ChangedFileView_Previews: PreviewProvider {
     static var previews: some View {
         let models = [
             ChangedFileModel(
+                fileURL: URL(filePath: "test.md"),
                 oldFileURL: URL(filePath: "long/long/long/long/long/long/test.txt"),
                 newFileURL: URL(filePath: "test.md"),
                 changeType: .renamed),
             ChangedFileModel(
+                fileURL: URL(filePath: "test2.txt"),
                 oldFileURL: URL(filePath: "test2.txt"),
                 newFileURL: URL(filePath: "test2.txt"),
                 changeType: .modified),
             ChangedFileModel(
+                fileURL: URL(filePath: "test3.txt"),
                 oldFileURL: URL(filePath: "test3.txt"),
                 newFileURL: nil,
                 changeType: .deleted),
             ChangedFileModel(
+                fileURL: URL(filePath: "test3.txt"),
                 oldFileURL: nil,
                 newFileURL: URL(filePath: "test3.txt"),
                 changeType: .added),

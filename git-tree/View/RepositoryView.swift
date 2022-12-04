@@ -24,7 +24,9 @@ struct RepositoryView: View {
 
             List {
                 ForEach(vm.changedFiles) { file in
-                    ChangedFileView(model: file)
+                    NavigationLink(destination: { FileChangesView(vm: FileChangesViewModel(file: file, vm: vm)) }) {
+                        ChangedFileView(model: file)
+                    }
                 }
             }.refreshable {
                 vm.updateHeadInfo()
@@ -37,7 +39,7 @@ struct RepositoryView: View {
                     .disabled(isCommitting || vm.changedFiles.isEmpty)
             }.padding()
         }
-        .navigationTitle(vm.model.name)
+        .navigationTitle("Repository: \(vm.model.name)")
         .toolbar {
             Button(
                 action: { pull() },

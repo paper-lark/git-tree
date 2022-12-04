@@ -35,6 +35,7 @@ struct GitClient {
             }
 
             files[key] = ChangedFileModel(
+                fileURL: key,
                 oldFileURL: oldFileURL,
                 newFileURL: newFileURL,
                 changeType: changeType)

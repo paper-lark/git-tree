@@ -55,12 +55,28 @@ class RepositoryViewModel: ObservableObject {
             }
         ]
     }
+    
+    func getChangesFor(fileURL: URL) -> [String] {
+        let opts: [String: Any] = [
+            GTDiffOptionsPathSpecArrayKey: [fileURL.relativePath],
+            GTDiffOptionsMaxSizeKey: 16 * 1024 // max diff size: 1MB
+        ]
+        
+        var changes: [String] = []
+        try! GTDiff(workingDirectoryToHEADIn: model.repository, options: opts).enumerateDeltas { block, _ in
+            if let s = try? String(data: block.generatePatch().patchData(), encoding: .utf8) {
+                changes.append(s)
+            }
+        }
+        print(changes)
+        return changes
+    }
 
     func updateHeadInfo() {
         try! model.checkout(branch: model.repository.localBranches().first!.name!)
         try! model.repository.index().addAll()
 
-        changedFiles = GitClient.getChangesForRepository(model.repository)
+        changedFiles = GitClient.getChangesForRepository(model.repository)        
         localBranches = try! model.repository.localBranches().compactMap { $0.name }
 
         let branch = try! model.repository.currentBranch()
