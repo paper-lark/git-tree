@@ -10,6 +10,13 @@ struct SplashScreenView: View {
         } else {
             VStack {
                 Image("Git")
+                    .overlay(alignment: .bottom) {
+                        Text("Loading…")
+                            .alignmentGuide(.bottom) { dimension in
+                                dimension[.top] - 32
+                            }
+                    }
+
             }.onAppear {
                 DispatchQueue.main.async {
                     // load repository data

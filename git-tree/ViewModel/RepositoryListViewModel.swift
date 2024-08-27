@@ -19,38 +19,21 @@ class RepositoryListViewModel: ObservableObject {
         self.repositories = []
         self.repositoryBookmarks = [:]
 
-        // start loading bookmarked repositories
-        let op = RepositoryAsyncOperation(kind: .load, currentProgress: 0)
-        currentOperation = op
-
-        DispatchQueue.global(qos: .userInitiated).async {
-            for (oldURL, bookmarkData) in currentBookmarks {
-                // check bookmark state
-                var isStale = false
-                guard
-                    let localURL = try? URL(
-                        resolvingBookmarkData: bookmarkData, bookmarkDataIsStale: &isStale),
-                    !isStale
-                else {
-                    // TODO: Remove stale bookmarks
-                    continue
-                }
-
-                // load repository
-                if let newRepository = try? RepositoryInfoModel.initWith(localPath: localURL) {
-                    DispatchQueue.main.async {
-                        self.addRepository(newRepository)
-                    }
-                } else {
-                    print("Removing invalid repository")
-                    DispatchQueue.main.async {
-                        self.removeRepository(withLocalURL: localURL)
-                    }
-                }
+        // load bookmarked repositories
+        for (oldURL, bookmarkData) in currentBookmarks {
+            // check bookmark state
+            var isStale = false
+            guard
+                let localURL = try? URL(
+                    resolvingBookmarkData: bookmarkData, bookmarkDataIsStale: &isStale),
+                !isStale
+            else {
+                continue
             }
 
-            DispatchQueue.main.async {
-                self.currentOperation = nil
+            // load repository
+            if let newRepository = try? RepositoryInfoModel.initWith(localPath: localURL) {
+                addRepository(newRepository)
             }
         }
     }
