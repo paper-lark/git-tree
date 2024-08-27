@@ -33,13 +33,15 @@ struct RepositoryAsyncOperationView: View {
 }
 
 struct RepositoryAsyncOperationView_Previews: PreviewProvider {
-    static var previews: some View {
-        let vm = RepositoryAsyncOperation(kind: .push, currentProgress: 0)
+    static var operation = RepositoryAsyncOperation(kind: .push, currentProgress: 0.1)
 
+    static var previews: some View {
         VStack {
-            RepositoryAsyncOperationView(operation: vm)
+            RepositoryAsyncOperationView(operation: operation)
             Button("Add progress") {
-                vm.updateProgress(current: vm.currentProgress + 0.1)
+                withAnimation {
+                    operation.updateProgress(current: operation.currentProgress + 0.1)
+                }
             }
         }
     }

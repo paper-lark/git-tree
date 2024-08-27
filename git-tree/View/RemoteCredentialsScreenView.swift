@@ -17,7 +17,7 @@ struct RemoteCredentialsScreenView: View {
                         .autocorrectionDisabled(true)
                 }
             }
-            .navigationBarTitle("Edit remote credentials", displayMode: .inline)
+            .navigationBarTitle("Remote credentials", displayMode: .inline)
             .navigationBarItems(
                 trailing: Button("Close") {
                     dismiss()

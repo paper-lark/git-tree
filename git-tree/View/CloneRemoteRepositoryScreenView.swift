@@ -36,9 +36,16 @@ struct CloneRemoteRepositoryScreenView: View {
                         // TODO: Do not close form until success.
                         dismiss()
                     }
-                }
+                }.disabled(!isParametersValid())
             )
         }
+    }
+
+    private func isParametersValid() -> Bool {
+        if let remoteURL = URL(string: repositoryURL), let localURL = selectedLocalURL {
+            return true
+        }
+        return false
     }
 }
 

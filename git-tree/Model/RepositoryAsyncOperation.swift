@@ -15,8 +15,6 @@ class RepositoryAsyncOperation: ObservableObject {
     }
 
     func updateProgress(current: Float) {
-        withAnimation {
-            self.currentProgress = current
-        }
+        self.currentProgress = current
     }
 }

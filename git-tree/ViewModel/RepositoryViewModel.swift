@@ -87,7 +87,7 @@ class RepositoryViewModel: ObservableObject {
 
             try! model.repository.pull(currentBranch, from: remote, withOptions: opts) {
                 progress, _ in
-                if let op = self.currentOperation {
+                if var op = self.currentOperation {
                     DispatchQueue.main.async {
                         op.updateProgress(
                             current: Float(progress.pointee.received_objects)
@@ -118,7 +118,7 @@ class RepositoryViewModel: ObservableObject {
 
             try! model.repository.push(currentBranch, to: remote, withOptions: opts) {
                 current, total, _, _ in
-                if let op = self.currentOperation {
+                if var op = self.currentOperation {
                     DispatchQueue.main.async {
                         op.updateProgress(current: Float(current) / min(Float(total), 1))
                     }
