@@ -26,7 +26,11 @@ struct RepositoryListView: View {
                         }
                     }
                 }
+                if let op = vm.currentOperation {
+                    RepositoryAsyncOperationView(operation: op).padding(.top)
+                }
             }
+            .padding()
             .sheet(isPresented: $showAddRepository) {
                 AddRepositoryScreenView(vm: vm)
             }

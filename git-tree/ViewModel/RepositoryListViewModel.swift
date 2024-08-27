@@ -12,65 +12,109 @@ class RepositoryListViewModel: ObservableObject {
     }
     @Published var repositories: [RepositoryInfoModel] = []
     @Published var latestError = ErrorDescription.noError()
+    @Published var currentOperation: RepositoryAsyncOperation? = nil
 
     func loadBookmarks() {
         let currentBookmarks = self.repositoryBookmarks
         self.repositories = []
         self.repositoryBookmarks = [:]
 
-        for (oldURL, bookmarkData) in currentBookmarks {
-            print("Loading bookmarked repository: \(oldURL)")
-            var isStale = false
-            guard
-                let localURL = try? URL(
-                    resolvingBookmarkData: bookmarkData, bookmarkDataIsStale: &isStale), !isStale
-            else {
-                continue
+        // start loading bookmarked repositories
+        let op = RepositoryAsyncOperation(kind: .load, currentProgress: 0)
+        currentOperation = op
+
+        DispatchQueue.global(qos: .userInitiated).async {
+            for (oldURL, bookmarkData) in currentBookmarks {
+                // check bookmark state
+                var isStale = false
+                guard
+                    let localURL = try? URL(
+                        resolvingBookmarkData: bookmarkData, bookmarkDataIsStale: &isStale),
+                    !isStale
+                else {
+                    // TODO: Remove stale bookmarks
+                    continue
+                }
+
+                // load repository
+                if let newRepository = try? RepositoryInfoModel.initWith(localPath: localURL) {
+                    DispatchQueue.main.async {
+                        self.addRepository(newRepository)
+                    }
+                } else {
+                    print("Removing invalid repository")
+                    DispatchQueue.main.async {
+                        self.removeRepository(withLocalURL: localURL)
+                    }
+                }
             }
-            print("Loaded bookmarked repository: \(localURL.absoluteString)")
-            self.addRepository(fromLocalURL: localURL)
+
+            DispatchQueue.main.async {
+                self.currentOperation = nil
+            }
         }
     }
 
     func addRepository(
         fromRemoteURL remoteURL: URL, toLocalURL localURL: URL, credentials: RemoteCredentialsModel
-    ) -> Bool {
+    ) {
         // check if repository already exists
         guard repositories.firstIndex(where: { $0.localPath == remoteURL }) == nil else {
-            return true
+            return
         }
 
-        // clone remote repository
-        do {
-            let newRepository = try RepositoryInfoModel.clone(
-                fromRemoteURL: remoteURL,
-                toLocalPath: localURL,
-                credentials: credentials)
-            addRepository(newRepository)
-            return true
-        } catch {
-            latestError.showError(
-                header: "Failed to fetch remote repository", description: error.localizedDescription
-            )
-            return false
+        // start cloning repository
+        let op = RepositoryAsyncOperation(kind: .clone, currentProgress: 0)
+        currentOperation = op
+
+        DispatchQueue.global(qos: .userInitiated).async {
+            do {
+                let newRepository = try RepositoryInfoModel.clone(
+                    fromRemoteURL: remoteURL,
+                    toLocalPath: localURL,
+                    credentials: credentials)
+
+                DispatchQueue.main.async {
+                    self.addRepository(newRepository)
+                    self.currentOperation = nil
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    self.latestError.showError(
+                        header: "Failed to fetch remote repository",
+                        description: error.localizedDescription
+                    )
+                    self.currentOperation = nil
+                }
+            }
         }
     }
 
-    func addRepository(fromLocalURL localURL: URL) -> Bool {
+    func addRepository(fromLocalURL localURL: URL) {
         // check if repository already exists
         guard repositories.firstIndex(where: { $0.localPath == localURL }) == nil else {
-            return true
+            return
         }
 
-        // initialize local repository
-        do {
-            let newRepository = try RepositoryInfoModel.initWith(localPath: localURL)
-            addRepository(newRepository)
-            return true
-        } catch {
-            latestError.showError(
-                header: "Failed to open local repository", description: error.localizedDescription)
-            return false
+        // start loading local repository
+        let op = RepositoryAsyncOperation(kind: .load, currentProgress: 0)
+        currentOperation = op
+
+        DispatchQueue.global(qos: .userInitiated).async {
+            do {
+                let newRepository = try RepositoryInfoModel.initWith(localPath: localURL)
+                DispatchQueue.main.async {
+                    self.addRepository(newRepository)
+                    self.currentOperation = nil
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    self.latestError.showError(
+                        header: "Failed to open local repository",
+                        description: error.localizedDescription)
+                    self.currentOperation = nil
+                }
+            }
         }
     }
 

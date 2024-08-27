@@ -27,7 +27,8 @@ class RepositoryViewModel: ObservableObject {
         return [
             GTRepositoryRemoteOptionsCredentialProvider: GTCredentialProvider {
                 _, _, _ in
-                try! GTCredential(userName: self.credentials.username, password: self.credentials.password)
+                try! GTCredential(
+                    userName: self.credentials.username, password: self.credentials.password)
             }
         ]
     }
@@ -55,7 +56,7 @@ class RepositoryViewModel: ObservableObject {
         commitMessage = ""
         let model = self.model
 
-        DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global(qos: .userInitiated).async {
             let indexTree = try! model.repository.index().writeTree()
             let parentCommit = try! model.repository.currentBranch().targetCommit()
 
@@ -79,7 +80,7 @@ class RepositoryViewModel: ObservableObject {
         let model = self.model
         let opts = self.getRemoteOptions()
 
-        DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global(qos: .userInitiated).async {
             // TODO: select remote
             let remote = try! GTRemote(name: "origin", in: model.repository)
             let currentBranch = try! model.repository.currentBranch()
@@ -111,7 +112,7 @@ class RepositoryViewModel: ObservableObject {
         let model = self.model
         let opts = self.getRemoteOptions()
 
-        DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global(qos: .userInitiated).async {
             let currentBranch = try! model.repository.currentBranch()
             let remote = try! GTRemote(name: "origin", in: model.repository)
 
@@ -139,7 +140,7 @@ class RepositoryViewModel: ObservableObject {
 
         let model = self.model
 
-        DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global(qos: .userInitiated).async {
             let currentBranch = try! model.repository.currentBranch()
 
             var error: NSError? = nil

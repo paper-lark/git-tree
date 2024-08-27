@@ -11,6 +11,12 @@ struct RepositoryAsyncOperationView: View {
 
     private var description: String {
         switch operation.kind {
+        case .load:
+            return "Loading repository"
+
+        case .clone:
+            return "Cloning repository"
+
         case .push:
             return "Pushing to remote"
 
