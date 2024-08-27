@@ -11,6 +11,7 @@ class RepositoryListViewModel: ObservableObject {
         }
     }
     @Published var repositories: [RepositoryInfoModel] = []
+    @Published var latestError = ErrorDescription.noError()
 
     func loadBookmarks() {
         let currentBookmarks = self.repositoryBookmarks
@@ -33,25 +34,43 @@ class RepositoryListViewModel: ObservableObject {
 
     func addRepository(
         fromRemoteURL remoteURL: URL, toLocalURL localURL: URL, credentials: RemoteCredentialsModel
-    ) {
+    ) -> Bool {
+        // check if repository already exists
         guard repositories.firstIndex(where: { $0.localPath == remoteURL }) == nil else {
-            return
+            return true
         }
 
-        if let newRepository = RepositoryInfoModel.clone(
-            fromRemoteURL: remoteURL, toLocalPath: localURL, credentials: credentials)
-        {
+        // clone remote repository
+        do {
+            let newRepository = try RepositoryInfoModel.clone(
+                fromRemoteURL: remoteURL,
+                toLocalPath: localURL,
+                credentials: credentials)
             addRepository(newRepository)
+            return true
+        } catch {
+            latestError.showError(
+                header: "Failed to fetch remote repository", description: error.localizedDescription
+            )
+            return false
         }
     }
 
-    func addRepository(fromLocalURL localURL: URL) {
+    func addRepository(fromLocalURL localURL: URL) -> Bool {
+        // check if repository already exists
         guard repositories.firstIndex(where: { $0.localPath == localURL }) == nil else {
-            return
+            return true
         }
 
-        if let newRepository = RepositoryInfoModel.initWith(localPath: localURL) {
+        // initialize local repository
+        do {
+            let newRepository = try RepositoryInfoModel.initWith(localPath: localURL)
             addRepository(newRepository)
+            return true
+        } catch {
+            latestError.showError(
+                header: "Failed to open local repository", description: error.localizedDescription)
+            return false
         }
     }
 

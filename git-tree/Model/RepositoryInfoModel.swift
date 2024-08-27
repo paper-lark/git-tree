@@ -12,31 +12,29 @@ struct RepositoryInfoModel: Identifiable {
     static func clone(
         fromRemoteURL remoteURL: URL, toLocalPath localPath: URL,
         credentials: RemoteCredentialsModel
-    ) -> RepositoryInfoModel? {
+    ) throws -> RepositoryInfoModel {
+        // check if local path is available
         guard localPath.startAccessingSecurityScopedResource() else {
-            return nil
+            throw RepositoryError.filePathUnavailable
         }
 
-        guard
-            let repo = GitClient.clone(
-                fromRemoteURL: remoteURL, toLocalURL: localPath, username: credentials.username,
-                password: credentials.password)
-        else {
-            return nil
-        }
+        // clone remote repository
+        let repo = try GitClient.clone(
+            fromRemoteURL: remoteURL, toLocalURL: localPath, username: credentials.username,
+            password: credentials.password)
 
         return RepositoryInfoModel(
             name: localPath.lastPathComponent, localPath: localPath, repository: repo)
     }
 
-    static func initWith(localPath: URL) -> RepositoryInfoModel? {
+    static func initWith(localPath: URL) throws -> RepositoryInfoModel {
+        // check if local path is available
         guard localPath.startAccessingSecurityScopedResource() else {
-            return nil
+            throw RepositoryError.filePathUnavailable
         }
 
-        guard let repo = GitClient.getRepository(localPath: localPath) else {
-            return nil
-        }
+        // get repository
+        let repo = try GitClient.getRepository(localPath: localPath)
 
         return RepositoryInfoModel(
             name: localPath.lastPathComponent, localPath: localPath, repository: repo)

@@ -22,21 +22,22 @@ class RepositoryViewModel: ObservableObject {
         self.updateHeadInfo()
     }
 
+    // FIXME: Similar to GitClient::getCloneRemoteOptions()
     func getRemoteOptions() -> [String: Any] {
         return [
             GTRepositoryRemoteOptionsCredentialProvider: GTCredentialProvider {
-                credentialType, remote, username in
-                try! GTCredential(
-                    userName: self.credentials.username, password: self.credentials.password)
+                _, _, _ in
+                try! GTCredential(userName: self.credentials.username, password: self.credentials.password)
             }
         ]
     }
 
     func updateHeadInfo() {
-        try! model.checkout(branch: model.repository.localBranches().first!.name!)
+        let branches = try! model.repository.localBranches()
+        try! model.checkout(branch: branches.first!.name!)
         try! model.repository.index().addAll()
 
-        changedFiles = GitClient.getChangesForRepository(model.repository)
+        changedFiles = try! GitClient.getChangesForRepository(model.repository)
         localBranches = try! model.repository.localBranches().compactMap { $0.name }
 
         let branch = try! model.repository.currentBranch()
@@ -79,7 +80,8 @@ class RepositoryViewModel: ObservableObject {
         let opts = self.getRemoteOptions()
 
         DispatchQueue.global(qos: .background).async {
-            let remote = try! GTRemote(name: "origin", in: model.repository)  // TODO: select remote
+            // TODO: select remote
+            let remote = try! GTRemote(name: "origin", in: model.repository)
             let currentBranch = try! model.repository.currentBranch()
 
             try! model.repository.pull(currentBranch, from: remote, withOptions: opts) {

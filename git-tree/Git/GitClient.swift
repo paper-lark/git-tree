@@ -4,26 +4,24 @@ struct GitClient {
     static let gitFolder = ".git"
 
     static func clone(fromRemoteURL: URL, toLocalURL: URL, username: String, password: String)
-        -> GTRepository?
+        throws -> GTRepository
     {
-        return try! GTRepository.clone(
+        // TODO: show progress
+        // https://libgit2.org/docs/guides/101-samples/#repositories_clone_progress
+        // TODO: does not checkout remote branch
+        return try GTRepository.clone(
             from: fromRemoteURL, toWorkingDirectory: toLocalURL,
             options: getCloneRemoteOptions(username: username, password: password))
     }
 
-    static func getRepository(localPath: URL) -> GTRepository? {
-        do {
-            let repositoryFolder =
-                (localPath.lastPathComponent == gitFolder
-                ? localPath : URL(filePath: gitFolder, relativeTo: localPath)).absoluteURL
-            return try GTRepository(url: repositoryFolder)
-        } catch let err {
-            print(err)
-            return nil
-        }
+    static func getRepository(localPath: URL) throws -> GTRepository {
+        let repositoryFolder =
+            (localPath.lastPathComponent == gitFolder
+            ? localPath : URL(filePath: gitFolder, relativeTo: localPath)).absoluteURL
+        return try GTRepository(url: repositoryFolder)
     }
 
-    static func getChangesForRepository(_ repository: GTRepository) -> [ChangedFileModel] {
+    static func getChangesForRepository(_ repository: GTRepository) throws -> [ChangedFileModel] {
         var files: [URL: ChangedFileModel] = [:]
 
         func process(delta: GTStatusDelta) {
@@ -40,7 +38,7 @@ struct GitClient {
                 changeType: changeType)
         }
 
-        try! repository.enumerateFileStatus(options: nil) { headToIndex, indexToWorkingDir, _ in
+        try repository.enumerateFileStatus(options: nil) { headToIndex, indexToWorkingDir, _ in
             if let diff = headToIndex {
                 process(delta: diff)
             }
@@ -59,13 +57,13 @@ struct GitClient {
         return URL.init(filePath: filePath, relativeTo: relativeTo)
     }
 
-    static func getCloneRemoteOptions(username: String, password: String) -> [String: Any] {
+    static func getCloneRemoteOptions(username: String, password: String) throws -> [String: Any] {
+        let credentials = try GTCredential(userName: username, password: password)
         return [
             GTRepositoryCloneOptionsCredentialProvider: GTCredentialProvider {
-                _, _, _ in
-                try! GTCredential(
-                    userName: username, password: password)
-            }
+                _, _, _ in credentials
+            },
+            GTRepositoryCloneOptionsCheckoutOptions: GTCheckoutOptions(strategy: .force),
         ]
     }
 }

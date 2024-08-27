@@ -63,7 +63,9 @@ struct RepositoryListView: View {
                 } label: {
                     Image(systemName: "plus")
                 }
-            }.navigationTitle("Repositories")
+            }
+            .navigationTitle("Repositories")
+            .errorMessage(error: $vm.latestError)
         }
     }
 }

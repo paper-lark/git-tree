@@ -28,12 +28,16 @@ struct CloneRemoteRepositoryScreenView: View {
                 },
                 trailing: Button("Clone") {
                     if let remoteURL = URL(string: repositoryURL), let localURL = selectedLocalURL {
-                        vm.addRepository(
+                        if vm.addRepository(
                             fromRemoteURL: remoteURL, toLocalURL: localURL,
-                            credentials: vm.credentials.toModel())
-                        dismiss()
+                            credentials: vm.credentials.toModel()
+                        ) {
+                            dismiss()
+                        }
                     }
-                })
+                }
+            )
+            .errorMessage(error: $vm.latestError)
         }
     }
 }
