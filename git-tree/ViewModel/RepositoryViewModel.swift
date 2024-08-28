@@ -46,7 +46,7 @@ class RepositoryViewModel: ObservableObject {
         headCommitSHA = try! branch.targetCommit().sha
     }
 
-    func commit() {
+    func commit(files: Set<String>) {
         guard currentOperation == nil else {
             return
         }
@@ -57,9 +57,19 @@ class RepositoryViewModel: ObservableObject {
         let model = self.model
 
         DispatchQueue.global(qos: .userInitiated).async {
+            // add spcified files to index
+            for entry in try! model.repository.index().entries {
+                if entry.isStaged {
+                    try! model.repository.index().removeFile(entry.path)
+                }
+            }
+            for file in files {
+                try! model.repository.index().addFile(file)
+            }
+
+            // write index and commit it
             let indexTree = try! model.repository.index().writeTree()
             let parentCommit = try! model.repository.currentBranch().targetCommit()
-
             try! model.repository.createCommit(
                 with: indexTree, message: message, parents: [parentCommit],
                 updatingReferenceNamed: "HEAD")

@@ -57,6 +57,8 @@ struct ChangedFileView: View {
 }
 
 struct ChangedFileView_Previews: PreviewProvider {
+    @State static var isSelected: Bool = false
+
     static var previews: some View {
         let models = [
             ChangedFileModel(

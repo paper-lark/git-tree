@@ -40,6 +40,6 @@ struct ChangedFileModel: Identifiable, Hashable {
     let changeType: FileChangeType
 
     var id: String {
-        "\(oldFileURL?.absoluteString ?? "")/\(newFileURL?.absoluteString ?? "")"
+        newFileURL?.relativePath ?? oldFileURL?.relativePath ?? ""
     }
 }

@@ -2,6 +2,8 @@ import SwiftUI
 
 struct RepositoryView: View {
     @ObservedObject var vm: RepositoryViewModel
+    @Environment(\.editMode) var editMode
+    @State private var selectedFiles = Set<String>()
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -24,36 +26,50 @@ struct RepositoryView: View {
 
             Divider()
 
-            List {
-                ForEach(vm.changedFiles) { file in
-                    ChangedFileView(model: file)
-                }
+            List(vm.changedFiles, selection: $selectedFiles) { file in
+                ChangedFileView(model: file)
             }.refreshable {
                 vm.updateHeadInfo()
             }
-            Divider()
-            HStack {
-                TextField("Commit message", text: $vm.commitMessage)
-                Button("Commit") { vm.commit() }
+
+            if isEditing() {
+                Divider()
+                HStack {
+                    TextField("Commit message", text: $vm.commitMessage)
+                    Button("Commit") {
+                        vm.commit(files: selectedFiles)
+                        editMode?.wrappedValue = .inactive
+                    }
                     .keyboardShortcut(.return)
                     .disabled(vm.currentOperation != nil || vm.changedFiles.isEmpty)
-            }.padding()
+                }.padding()
+            }
         }
+        .moveDisabled(true)
+        .deleteDisabled(true)  // TODO: support reset for specific file
         .navigationTitle(vm.model.name)
         .toolbar {
-            Button(
-                action: { vm.resetToRemote() },
-                label: { IconWithText(systemIcon: "doc.badge.gearshape", text: "Reset") }
-            ).disabled(vm.currentOperation != nil)
-            Button(
-                action: { vm.pull() },
-                label: { IconWithText(systemIcon: "arrow.down.doc", text: "Pull") }
-            ).disabled(vm.currentOperation != nil)
-            Button(
-                action: { vm.push() },
-                label: { IconWithText(systemIcon: "arrow.up.doc", text: "Push") }
-            ).disabled(vm.currentOperation != nil)
+            EditButton()
+
+            if !isEditing() {
+                Button(
+                    action: { vm.resetToRemote() },
+                    label: { IconWithText(systemIcon: "doc.badge.gearshape", text: "Reset") }
+                ).disabled(vm.currentOperation != nil)
+                Button(
+                    action: { vm.pull() },
+                    label: { IconWithText(systemIcon: "arrow.down.doc", text: "Pull") }
+                ).disabled(vm.currentOperation != nil)
+                Button(
+                    action: { vm.push() },
+                    label: { IconWithText(systemIcon: "arrow.up.doc", text: "Push") }
+                ).disabled(vm.currentOperation != nil)
+            }
         }
+    }
+
+    private func isEditing() -> Bool {
+        return editMode?.wrappedValue.isEditing ?? false
     }
 }
 
