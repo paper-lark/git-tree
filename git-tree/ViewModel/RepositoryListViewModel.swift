@@ -3,11 +3,9 @@ import SwiftUI
 
 class RepositoryListViewModel: ObservableObject {
     @Published var credentials = RemoteCredentialsViewModel()
-    @Published var repositoryBookmarks: [String: Data] =
-        UserDefaults.standard.dictionary(forKey: "repositories") as? [String: Data] ?? [:]
-    {
+    @Published var repositoryBookmarks: [String: Data] = RepositoryBookmarkStore.getBookmarks() {
         didSet {
-            UserDefaults.standard.set(repositoryBookmarks, forKey: "repositories")
+            RepositoryBookmarkStore.storeBookmarks(bookmarks: repositoryBookmarks)
         }
     }
     @Published var repositories: [RepositoryInfoModel] = []
