@@ -11,14 +11,14 @@ class RemoteCredentialsViewModel: ObservableObject {
         let credentials = KeychainHelper.standard.read(
             service: RemoteCredentialsViewModel.service,
             account: RemoteCredentialsViewModel.account,
-            type: RemoteCredentialsModel.self)
+            type: RemoteCredentials.self)
 
         self.username = credentials?.username ?? ""
         self.password = credentials?.password ?? ""
     }
 
-    func toModel() -> RemoteCredentialsModel {
-        return RemoteCredentialsModel(username: username, password: password)
+    func toModel() -> RemoteCredentials {
+        return RemoteCredentials(username: username, password: password)
     }
 
     func persist() {

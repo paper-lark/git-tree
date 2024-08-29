@@ -37,7 +37,7 @@ class RepositoryListViewModel: ObservableObject {
     }
 
     func addRepository(
-        fromRemoteURL remoteURL: URL, toLocalURL localURL: URL, credentials: RemoteCredentialsModel
+        fromRemoteURL remoteURL: URL, toLocalURL localURL: URL, credentials: RemoteCredentials
     ) {
         // check if repository already exists
         guard repositories.firstIndex(where: { $0.localPath == remoteURL }) == nil else {

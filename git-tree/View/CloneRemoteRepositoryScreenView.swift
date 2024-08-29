@@ -2,24 +2,41 @@ import SwiftUI
 
 struct CloneRemoteRepositoryScreenView: View {
     @Environment(\.dismiss) var dismiss
-    @State var repositoryURL: String = ""
-    @State var selectedLocalURL: URL? = nil
-    @State var showFolderSelect = false
-    @ObservedObject var vm: RepositoryListViewModel
+
+    @State private var repositoryURL: String = ""
+    @State private var selectedLocalURL: URL? = nil
+    @State private var showFolderSelect = false
+    @State private var credentials = RemoteCredentials(username: "", password: "")
+    @State private var latestError = ErrorDescription.noError()
+    @State private var isCloningRepository = false
+
+    var onSuccess: (Repository) -> Void
 
     var body: some View {
         NavigationView {
+            if isCloningRepository {
+                ProgressView {
+                    Text("Cloning repository…")
+                }
+            }
+
             Form {
                 RemoteRepositoryView(repositoryURL: $repositoryURL)
-                RemoteCredentialsView(credentials: vm.credentials)
+                RemoteCredentialsView(credentials: $credentials)
                 Button("Select local folder") {
                     showFolderSelect = true
                 }
             }
-            .sheet(isPresented: $showFolderSelect) {
-                DocumentPickerView(addRepository: { url in
-                    selectedLocalURL = url
-                })
+            .fileImporter(isPresented: $showFolderSelect, allowedContentTypes: [.folder]) {
+                result in
+                switch result {
+                case .success(let directory):
+                    selectedLocalURL = directory
+                case .failure(let error):
+                    latestError.showError(
+                        header: "Failed to open folder", description: error.localizedDescription
+                    )
+                }
             }
             .navigationBarTitle("Add remote repository", displayMode: .inline)
             .navigationBarItems(
@@ -28,21 +45,36 @@ struct CloneRemoteRepositoryScreenView: View {
                 },
                 trailing: Button("Clone") {
                     if let remoteURL = URL(string: repositoryURL), let localURL = selectedLocalURL {
-                        vm.addRepository(
-                            fromRemoteURL: remoteURL, toLocalURL: localURL,
-                            credentials: vm.credentials.toModel()
-                        )
+                        isCloningRepository = true
 
-                        // TODO: Do not close form until success.
-                        dismiss()
+                        Task {
+                            defer { isCloningRepository = false }
+
+                            try await Task.sleep(nanoseconds: 1_000_000_000)
+                            do {
+                                if let newRepository = try await CloneLocalRepositoryIntent(
+                                    localPath: localURL, remoteURL: remoteURL,
+                                    credentials: credentials
+                                ).perform().value {
+                                    onSuccess(newRepository)
+                                    dismiss()
+                                }
+                            } catch {
+                                latestError.showError(
+                                    header: "Failed to open repository",
+                                    description: error.localizedDescription)
+                            }
+
+                        }
                     }
                 }.disabled(!isParametersValid())
             )
+            .errorMessage(error: $latestError)
         }
     }
 
     private func isParametersValid() -> Bool {
-        if let remoteURL = URL(string: repositoryURL), let localURL = selectedLocalURL {
+        if let _ = URL(string: repositoryURL), let _ = selectedLocalURL {
             return true
         }
         return false
@@ -58,7 +90,9 @@ struct CloneRepositoryScreenView_Previews: PreviewProvider {
                 show = true
             }
         }.sheet(isPresented: $show) {
-            CloneRemoteRepositoryScreenView(vm: RepositoryListViewModel())
+            CloneRemoteRepositoryScreenView { _ in
+                print("Success")
+            }
         }
     }
 }

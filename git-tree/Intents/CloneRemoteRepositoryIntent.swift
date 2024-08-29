@@ -1,14 +1,26 @@
 import AppIntents
 
-struct AddLocalRepositoryIntent: AppIntent {
-    static var title: LocalizedStringResource = "Add new local repository"
-    static var description = IntentDescription("Adds a new local Git repository.")
+struct CloneLocalRepositoryIntent: AppIntent {
+    static var title: LocalizedStringResource = "Clone remote repository"
+    static var description = IntentDescription("Clones a remote Git repository to a local folder.")
 
-    @Parameter(title: "Folder")
+    @Parameter(title: "Local folder")
     var localPath: URL
 
-    init(localPath: URL) {
+    @Parameter(title: "Remote repository URL")
+    var remoteURL: URL
+
+    @Parameter(title: "Remote username")
+    var username: String
+
+    @Parameter(title: "Remote password")
+    var password: String
+
+    init(localPath: URL, remoteURL: URL, credentials: RemoteCredentials) {
         self.localPath = localPath
+        self.remoteURL = remoteURL
+        self.username = credentials.username
+        self.password = credentials.password
     }
 
     init() {}
@@ -25,9 +37,12 @@ struct AddLocalRepositoryIntent: AppIntent {
             throw RepositoryError.filePathUnavailable
         }
 
-        // check if folder is a valid repository
         do {
-            let _ = try GitClient.getRepository(localPath: localPath)
+            // clone remote repository
+            let _ = try GitClient.clone(
+                fromRemoteURL: remoteURL, toLocalURL: localPath, username: username,
+                password: password)
+            // TODO: No branch is cloned?
         } catch {
             localPath.stopAccessingSecurityScopedResource()
             throw error

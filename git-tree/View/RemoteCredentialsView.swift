@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct RemoteCredentialsView: View {
-    @ObservedObject var credentials: RemoteCredentialsViewModel
+    @Binding var credentials: RemoteCredentials
 
     var body: some View {
         Section("Remote credentials") {
@@ -16,9 +16,10 @@ struct RemoteCredentialsView: View {
 }
 
 struct RemoteCredentialsView_Previews: PreviewProvider {
+    @State static var credentials = RemoteCredentials()
     static var previews: some View {
         Form {
-            RemoteCredentialsView(credentials: RemoteCredentialsViewModel())
+            RemoteCredentialsView(credentials: $credentials)
         }
     }
 }

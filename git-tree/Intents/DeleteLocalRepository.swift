@@ -4,7 +4,7 @@ struct DeleteLocalRepository: AppIntent {
     static var title: LocalizedStringResource = "Delete local repository"
     static var description = IntentDescription("Deletes an existing local Git repository.")
 
-    @Parameter(title: "Folder")
+    @Parameter(title: "Local folder")
     var localPath: URL
 
     init(localPath: URL) {
@@ -15,9 +15,7 @@ struct DeleteLocalRepository: AppIntent {
 
     func perform() async throws -> some IntentResult {
         // delete repository from bookmarks
-        var bookmarks = RepositoryBookmarkStore.getBookmarks()
-        bookmarks.removeValue(forKey: localPath.absoluteString)
-        RepositoryBookmarkStore.storeBookmarks(bookmarks: bookmarks)
+        RepositoryBookmarkStore.removeBookmark(localPath: localPath)
 
         // stop access to the directory
         localPath.stopAccessingSecurityScopedResource()

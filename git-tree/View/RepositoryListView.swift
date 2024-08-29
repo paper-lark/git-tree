@@ -6,12 +6,18 @@ struct RepositoryListView: View {
 
     @State private var selection: String? = nil
     @State private var showAddLocalRepository = false
-    @State private var showCredentialsEditor = false
     @State private var showCloneRepository = false
+    @State private var isAddingLocalRepository = false
 
     var body: some View {
         NavigationView {
             VStack {
+                if isAddingLocalRepository {
+                    ProgressView {
+                        Text("Adding repository…")
+                    }
+                }
+
                 if repositories.isEmpty {
                     Text("No repositories found")
                         .foregroundColor(.secondary)
@@ -47,7 +53,13 @@ struct RepositoryListView: View {
                     .listStyle(.plain)
                     .refreshable {
                         Task {
-                            repositories = try! await RepositoryQuery().suggestedEntities()
+                            do {
+                                repositories = try await RepositoryQuery().suggestedEntities()
+                            } catch {
+                                latestError.showError(
+                                    header: "Failed to refresh repositories",
+                                    description: error.localizedDescription)
+                            }
                         }
                     }
                     .moveDisabled(true)
@@ -60,12 +72,14 @@ struct RepositoryListView: View {
                 result in
                 switch result {
                 case .success(let directory):
+                    isAddingLocalRepository = true
                     Task {
+                        defer { isAddingLocalRepository = false }
                         do {
                             if let newRepository = try await AddLocalRepositoryIntent(
                                 localPath: directory
                             ).perform().value {
-                                repositories = repositories + [newRepository]
+                                addRepository(newRepository: newRepository)
                             }
                         } catch {
                             latestError.showError(
@@ -80,23 +94,12 @@ struct RepositoryListView: View {
                     )
                 }
             }
-            //            .sheet(
-            //                isPresented: $showCredentialsEditor, onDismiss: { vm.credentials.persist() },
-            //                content: {
-            //                    RemoteCredentialsScreenView(credentials: vm.credentials)
-            //                }
-            //            )
-            //            .sheet(
-            //                isPresented: $showCloneRepository
-            //            ) {
-            //                CloneRemoteRepositoryScreenView(vm: vm)
-            //            }
+            .sheet(
+                isPresented: $showCloneRepository
+            ) {
+                CloneRemoteRepositoryScreenView(onSuccess: addRepository)
+            }
             .toolbar {
-                Button(
-                    action: { showCredentialsEditor = true },
-                    label: {
-                        Image(systemName: "person")
-                    })
                 Menu {
                     Button {
                         showAddLocalRepository = true
@@ -118,12 +121,16 @@ struct RepositoryListView: View {
             .errorMessage(error: $latestError)
         }
     }
+
+    private func addRepository(newRepository: Repository) {
+        repositories = repositories + [newRepository]
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         RepositoryListView(repositories: [
-            Repository(name: "Test", localPath: URL(string: "file:///test")!)
+            Repository(name: "Test", localPath: URL(fileURLWithPath: "."))
         ])
     }
 }

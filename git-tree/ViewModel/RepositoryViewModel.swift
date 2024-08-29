@@ -2,7 +2,7 @@ import Foundation
 
 class RepositoryViewModel: ObservableObject {
     let model: RepositoryInfoModel
-    let credentials: RemoteCredentialsModel
+    let credentials: RemoteCredentials
 
     @Published var changedFiles: [ChangedFileModel] = []
     @Published var currentBranch: String = ""
@@ -11,7 +11,7 @@ class RepositoryViewModel: ObservableObject {
     @Published var currentOperation: RepositoryAsyncOperation? = nil
     @Published var commitMessage: String = ""
 
-    init(model: RepositoryInfoModel, credentials: RemoteCredentialsModel) {
+    init(model: RepositoryInfoModel, credentials: RemoteCredentials) {
         self.model = model
         self.credentials = credentials
         self.changedFiles = []

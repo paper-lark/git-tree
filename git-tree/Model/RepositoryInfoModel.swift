@@ -11,7 +11,7 @@ struct RepositoryInfoModel: Identifiable {
 
     static func clone(
         fromRemoteURL remoteURL: URL, toLocalPath localPath: URL,
-        credentials: RemoteCredentialsModel
+        credentials: RemoteCredentials
     ) throws -> RepositoryInfoModel {
         // check if local path is available
         guard localPath.startAccessingSecurityScopedResource() else {
