@@ -18,14 +18,23 @@ struct Repository: AppEntity {
             subtitle: "\(localPath.relativePath)")
     }
 
-    //    @Property(title: "Name")
+    @Property(title: "Name")
     var name: String
 
-    //    @Property(title: "Path")
     var localPath: URL
 
     var id: String {
         return localPath.path(percentEncoded: false)
+    }
+
+    init(localPath: URL) {
+        self.localPath = localPath
+        self.name = localPath.lastPathComponent
+    }
+
+    init(name: String, localPath: URL) {
+        self.localPath = localPath
+        self.name = name
     }
 }
 
@@ -53,7 +62,7 @@ struct RepositoryQuery: EntityQuery {
             // check if repository exists
             if let repo = try? GitClient.getRepository(localPath: localPath) {
                 repositories.append(
-                    Repository(name: localPath.lastPathComponent, localPath: localPath))
+                    Repository(localPath: localPath))
             }
         }
 

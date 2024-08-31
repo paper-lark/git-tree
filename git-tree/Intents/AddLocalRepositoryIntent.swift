@@ -34,7 +34,7 @@ struct AddLocalRepositoryIntent: AppIntent {
         }
 
         // add new repository to bookmarks
-        let newRepository = Repository(name: localPath.lastPathComponent, localPath: localPath)
+        let newRepository = Repository(localPath: localPath)
         RepositoryBookmarkStore.addBookmark(
             localPath: newRepository.localPath, bookmarkData: bookmarkData)
 

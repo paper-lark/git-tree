@@ -25,11 +25,7 @@ struct RepositoryListView: View {
                 } else {
                     List(repositories) { repo in
                         NavigationLink(repo.name) {
-                            Text("Hello")
-                            //                                RepositoryView(
-                            //                                    vm: RepositoryViewModel(
-                            //                                        model: repo,
-                            //                                        credentials: RemoteCredentialsModel()))
+                            RepositoryView(repository: repo)
                         }.swipeActions(edge: .trailing) {
                             Button(role: .destructive) {
                                 repositories.removeAll { $0.id == repo.id }

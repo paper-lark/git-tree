@@ -4,7 +4,7 @@ class RepositoryViewModel: ObservableObject {
     let model: RepositoryInfoModel
     let credentials: RemoteCredentials
 
-    @Published var changedFiles: [ChangedFileModel] = []
+    @Published var changedFiles: [ChangedFile] = []
     @Published var currentBranch: String = ""
     @Published var headCommitSHA: String = ""
     @Published var localBranches: [String] = []

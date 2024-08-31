@@ -34,7 +34,7 @@ enum FileChangeType {
     }
 }
 
-struct ChangedFileModel: Identifiable, Hashable {
+struct ChangedFile: Identifiable, Hashable {
     let oldFileURL: URL?
     let newFileURL: URL?
     let changeType: FileChangeType

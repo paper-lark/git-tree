@@ -21,8 +21,8 @@ struct GitClient {
         return try GTRepository(url: repositoryFolder)
     }
 
-    static func getChangesForRepository(_ repository: GTRepository) throws -> [ChangedFileModel] {
-        var files: [URL: ChangedFileModel] = [:]
+    static func getChangesForRepository(_ repository: GTRepository) throws -> [ChangedFile] {
+        var files: [URL: ChangedFile] = [:]
 
         func process(delta: GTStatusDelta) {
             let changeType = FileChangeType.fromDeltaType(delta.status)
@@ -32,7 +32,7 @@ struct GitClient {
                 return
             }
 
-            files[key] = ChangedFileModel(
+            files[key] = ChangedFile(
                 oldFileURL: oldFileURL,
                 newFileURL: newFileURL,
                 changeType: changeType)
