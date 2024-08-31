@@ -1,6 +1,6 @@
 import AppIntents
 
-struct GetRepositoryDetails: AppIntent {
+struct GetRepositoryDetailsIntent: AppIntent {
     static var title: LocalizedStringResource = "Get repository details"
     static var description = IntentDescription("Returns details about a local Git repository.")
 
@@ -30,6 +30,7 @@ struct GetRepositoryDetails: AppIntent {
             value: RepositoryDetails(
                 repository: repository,
                 localBranches: try repo.localBranches().map(getBranchName),
+                remotes: try repo.remoteNames(),
                 remoteBranches: try repo.remoteBranches().map(getBranchName),
                 currentBranch: currentBranchDetails
             ))

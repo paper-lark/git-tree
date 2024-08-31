@@ -17,6 +17,7 @@ struct RepositoryDetails: TransientAppEntity {
     var repository: Repository = Repository(name: "", localPath: URL(fileURLWithPath: "."))
 
     var localBranches: [String] = []
+    var remotes: [String] = []
     var remoteBranches: [String] = []
     var currentBranch: RepositoryCurrentBranchDetails? = nil
 

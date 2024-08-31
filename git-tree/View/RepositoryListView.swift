@@ -8,6 +8,7 @@ struct RepositoryListView: View {
     @State private var showAddLocalRepository = false
     @State private var showCloneRepository = false
     @State private var isAddingLocalRepository = false
+    @State private var showCredentialsEditor = false
 
     var body: some View {
         NavigationView {
@@ -31,7 +32,7 @@ struct RepositoryListView: View {
                                 repositories.removeAll { $0.id == repo.id }
                                 Task {
                                     do {
-                                        let _ = try await DeleteLocalRepository(
+                                        let _ = try await DeleteLocalRepositoryIntent(
                                             localPath: repo.localPath
                                         ).perform()
                                     } catch {
@@ -95,7 +96,15 @@ struct RepositoryListView: View {
             ) {
                 CloneRemoteRepositoryScreenView(onSuccess: addRepository)
             }
+            .sheet(isPresented: $showCredentialsEditor) {
+                RemoteCredentialsScreenView()
+            }
             .toolbar {
+                Button(
+                    action: { showCredentialsEditor = true },
+                    label: {
+                        Image(systemName: "person")
+                    })
                 Menu {
                     Button {
                         showAddLocalRepository = true

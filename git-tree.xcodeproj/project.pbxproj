@@ -17,7 +17,6 @@
 		B4C76B5A29324BEB005AD4AD /* GitClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B5929324BEB005AD4AD /* GitClient.swift */; };
 		B4C76B64293267AA005AD4AD /* RepositoryInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B63293267AA005AD4AD /* RepositoryInfoModel.swift */; };
 		B4C76B6829326AF9005AD4AD /* RepositoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B6729326AF9005AD4AD /* RepositoryView.swift */; };
-		B4C76B6A2933654C005AD4AD /* RepositoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B692933654C005AD4AD /* RepositoryViewModel.swift */; };
 		B4C76B6E29338FBA005AD4AD /* RemoteCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B6D29338FBA005AD4AD /* RemoteCredentials.swift */; };
 		B4C76B70293390E7005AD4AD /* IconWithText.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B6F293390E7005AD4AD /* IconWithText.swift */; };
 		B4C76B722933922F005AD4AD /* RemoteCredentialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C76B712933922F005AD4AD /* RemoteCredentialsView.swift */; };
@@ -43,11 +42,16 @@
 		B4E9F5262C7F8C9C00A7BEF0 /* AddLocalRepositoryIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E9F5252C7F8C9C00A7BEF0 /* AddLocalRepositoryIntent.swift */; };
 		B4E9F5292C7F8D0800A7BEF0 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E9F5282C7F8D0800A7BEF0 /* Repository.swift */; };
 		B4E9F52B2C7F9D6800A7BEF0 /* RepositoryBookmarkStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E9F52A2C7F9D6800A7BEF0 /* RepositoryBookmarkStore.swift */; };
-		B4E9F52E2C7FA87800A7BEF0 /* DeleteLocalRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E9F52D2C7FA87800A7BEF0 /* DeleteLocalRepository.swift */; };
+		B4E9F52E2C7FA87800A7BEF0 /* DeleteLocalRepositoryIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E9F52D2C7FA87800A7BEF0 /* DeleteLocalRepositoryIntent.swift */; };
 		B4E9F5302C80E4A700A7BEF0 /* CloneRemoteRepositoryIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E9F52F2C80E4A700A7BEF0 /* CloneRemoteRepositoryIntent.swift */; };
 		B4E9F5322C830D9400A7BEF0 /* RemoteCredentialsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E9F5312C830D9400A7BEF0 /* RemoteCredentialsStore.swift */; };
 		B4E9F5342C830F6F00A7BEF0 /* RepositoryDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E9F5332C830F6F00A7BEF0 /* RepositoryDetails.swift */; };
-		B4E9F5372C83132200A7BEF0 /* GetRepositoryDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E9F5362C83132200A7BEF0 /* GetRepositoryDetails.swift */; };
+		B4E9F5372C83132200A7BEF0 /* GetRepositoryDetailsIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E9F5362C83132200A7BEF0 /* GetRepositoryDetailsIntent.swift */; };
+		B4E9F5392C83A23000A7BEF0 /* PushBranchIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E9F5382C83A23000A7BEF0 /* PushBranchIntent.swift */; };
+		B4E9F53B2C83A2A200A7BEF0 /* PullBranchIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E9F53A2C83A2A200A7BEF0 /* PullBranchIntent.swift */; };
+		B4E9F53D2C83A2D900A7BEF0 /* ResetToRemoteBranchIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E9F53C2C83A2D900A7BEF0 /* ResetToRemoteBranchIntent.swift */; };
+		B4E9F53F2C83AA2C00A7BEF0 /* CommitChangesIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E9F53E2C83AA2C00A7BEF0 /* CommitChangesIntent.swift */; };
+		B4E9F5412C83B7C000A7BEF0 /* RemoteCredentialsScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E9F5402C83B7C000A7BEF0 /* RemoteCredentialsScreenView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,7 +124,6 @@
 		B4C76B612932673C005AD4AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B4C76B63293267AA005AD4AD /* RepositoryInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryInfoModel.swift; sourceTree = "<group>"; };
 		B4C76B6729326AF9005AD4AD /* RepositoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryView.swift; sourceTree = "<group>"; };
-		B4C76B692933654C005AD4AD /* RepositoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryViewModel.swift; sourceTree = "<group>"; };
 		B4C76B6D29338FBA005AD4AD /* RemoteCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteCredentials.swift; sourceTree = "<group>"; };
 		B4C76B6F293390E7005AD4AD /* IconWithText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconWithText.swift; sourceTree = "<group>"; };
 		B4C76B712933922F005AD4AD /* RemoteCredentialsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteCredentialsView.swift; sourceTree = "<group>"; };
@@ -141,11 +144,16 @@
 		B4E9F5252C7F8C9C00A7BEF0 /* AddLocalRepositoryIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocalRepositoryIntent.swift; sourceTree = "<group>"; };
 		B4E9F5282C7F8D0800A7BEF0 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		B4E9F52A2C7F9D6800A7BEF0 /* RepositoryBookmarkStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryBookmarkStore.swift; sourceTree = "<group>"; };
-		B4E9F52D2C7FA87800A7BEF0 /* DeleteLocalRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteLocalRepository.swift; sourceTree = "<group>"; };
+		B4E9F52D2C7FA87800A7BEF0 /* DeleteLocalRepositoryIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteLocalRepositoryIntent.swift; sourceTree = "<group>"; };
 		B4E9F52F2C80E4A700A7BEF0 /* CloneRemoteRepositoryIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloneRemoteRepositoryIntent.swift; sourceTree = "<group>"; };
 		B4E9F5312C830D9400A7BEF0 /* RemoteCredentialsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteCredentialsStore.swift; sourceTree = "<group>"; };
 		B4E9F5332C830F6F00A7BEF0 /* RepositoryDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDetails.swift; sourceTree = "<group>"; };
-		B4E9F5362C83132200A7BEF0 /* GetRepositoryDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRepositoryDetails.swift; sourceTree = "<group>"; };
+		B4E9F5362C83132200A7BEF0 /* GetRepositoryDetailsIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRepositoryDetailsIntent.swift; sourceTree = "<group>"; };
+		B4E9F5382C83A23000A7BEF0 /* PushBranchIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushBranchIntent.swift; sourceTree = "<group>"; };
+		B4E9F53A2C83A2A200A7BEF0 /* PullBranchIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullBranchIntent.swift; sourceTree = "<group>"; };
+		B4E9F53C2C83A2D900A7BEF0 /* ResetToRemoteBranchIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetToRemoteBranchIntent.swift; sourceTree = "<group>"; };
+		B4E9F53E2C83AA2C00A7BEF0 /* CommitChangesIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitChangesIntent.swift; sourceTree = "<group>"; };
+		B4E9F5402C83B7C000A7BEF0 /* RemoteCredentialsScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteCredentialsScreenView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,7 +214,6 @@
 				B4C76B6229326752005AD4AD /* Git */,
 				B4C76B612932673C005AD4AD /* Info.plist */,
 				B4E9F5272C7F8CA200A7BEF0 /* Intents */,
-				B4C76B6029326709005AD4AD /* ViewModel */,
 				B4C76B5F293266FB005AD4AD /* Model */,
 				B4C76B5E293266F2005AD4AD /* View */,
 				B4C76B2D293248B2005AD4AD /* Assets.xcassets */,
@@ -258,6 +265,7 @@
 				B4C76B7C2933A559005AD4AD /* ChangedFileView.swift */,
 				B4C76B6F293390E7005AD4AD /* IconWithText.swift */,
 				B4C76B712933922F005AD4AD /* RemoteCredentialsView.swift */,
+				B4E9F5402C83B7C000A7BEF0 /* RemoteCredentialsScreenView.swift */,
 				B4C76B802933C5A2005AD4AD /* SplashScreenView.swift */,
 				B4C76B842939CAAF005AD4AD /* CloneRemoteRepositoryScreenView.swift */,
 				B4C76B882939D051005AD4AD /* RemoteRepositoryView.swift */,
@@ -283,14 +291,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		B4C76B6029326709005AD4AD /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				B4C76B692933654C005AD4AD /* RepositoryViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
 		B4C76B6229326752005AD4AD /* Git */ = {
 			isa = PBXGroup;
 			children = (
@@ -313,8 +313,12 @@
 			children = (
 				B4E9F5252C7F8C9C00A7BEF0 /* AddLocalRepositoryIntent.swift */,
 				B4E9F52F2C80E4A700A7BEF0 /* CloneRemoteRepositoryIntent.swift */,
-				B4E9F52D2C7FA87800A7BEF0 /* DeleteLocalRepository.swift */,
-				B4E9F5362C83132200A7BEF0 /* GetRepositoryDetails.swift */,
+				B4E9F52D2C7FA87800A7BEF0 /* DeleteLocalRepositoryIntent.swift */,
+				B4E9F5362C83132200A7BEF0 /* GetRepositoryDetailsIntent.swift */,
+				B4E9F5382C83A23000A7BEF0 /* PushBranchIntent.swift */,
+				B4E9F53A2C83A2A200A7BEF0 /* PullBranchIntent.swift */,
+				B4E9F53C2C83A2D900A7BEF0 /* ResetToRemoteBranchIntent.swift */,
+				B4E9F53E2C83AA2C00A7BEF0 /* CommitChangesIntent.swift */,
 			);
 			path = Intents;
 			sourceTree = "<group>";
@@ -463,33 +467,37 @@
 			files = (
 				B4E9F5262C7F8C9C00A7BEF0 /* AddLocalRepositoryIntent.swift in Sources */,
 				B4C76B6E29338FBA005AD4AD /* RemoteCredentials.swift in Sources */,
-				B4C76B6A2933654C005AD4AD /* RepositoryViewModel.swift in Sources */,
 				B4E9F51E2C7E347F00A7BEF0 /* View+ErrorMessage.swift in Sources */,
 				B4E9F52B2C7F9D6800A7BEF0 /* RepositoryBookmarkStore.swift in Sources */,
-				B4E9F5372C83132200A7BEF0 /* GetRepositoryDetails.swift in Sources */,
+				B4E9F5372C83132200A7BEF0 /* GetRepositoryDetailsIntent.swift in Sources */,
 				B4C76B7F2933C241005AD4AD /* Colors.swift in Sources */,
 				B4C7CC67293CACFA00250EA6 /* RepositoryAsyncOperationView.swift in Sources */,
-				B4E9F52E2C7FA87800A7BEF0 /* DeleteLocalRepository.swift in Sources */,
+				B4E9F52E2C7FA87800A7BEF0 /* DeleteLocalRepositoryIntent.swift in Sources */,
 				B4E9F5292C7F8D0800A7BEF0 /* Repository.swift in Sources */,
 				B4C76B6829326AF9005AD4AD /* RepositoryView.swift in Sources */,
 				B4C76B7D2933A559005AD4AD /* ChangedFileView.swift in Sources */,
 				B4C76B7B2933A4AC005AD4AD /* ChangedFile.swift in Sources */,
 				B4C76B64293267AA005AD4AD /* RepositoryInfoModel.swift in Sources */,
+				B4E9F53B2C83A2A200A7BEF0 /* PullBranchIntent.swift in Sources */,
 				B4E9F5322C830D9400A7BEF0 /* RemoteCredentialsStore.swift in Sources */,
 				B4C76B852939CAAF005AD4AD /* CloneRemoteRepositoryScreenView.swift in Sources */,
 				B4C76B722933922F005AD4AD /* RemoteCredentialsView.swift in Sources */,
 				B4C76B70293390E7005AD4AD /* IconWithText.swift in Sources */,
 				B4C76B812933C5A2005AD4AD /* SplashScreenView.swift in Sources */,
+				B4E9F5412C83B7C000A7BEF0 /* RemoteCredentialsScreenView.swift in Sources */,
 				B4C76B2C293248A8005AD4AD /* RepositoryListView.swift in Sources */,
 				B4C7CC69293CAD4600250EA6 /* RepositoryAsyncOperation.swift in Sources */,
 				B4C76B892939D051005AD4AD /* RemoteRepositoryView.swift in Sources */,
 				B4E9F51A2C7E330900A7BEF0 /* RepositoryError.swift in Sources */,
 				B4C76B2A293248A8005AD4AD /* App.swift in Sources */,
 				B4C76B7629339E1E005AD4AD /* KeychainConfiguration.swift in Sources */,
+				B4E9F53D2C83A2D900A7BEF0 /* ResetToRemoteBranchIntent.swift in Sources */,
 				B4C76B7929339FBF005AD4AD /* KeychainHelper.swift in Sources */,
 				B4E9F5302C80E4A700A7BEF0 /* CloneRemoteRepositoryIntent.swift in Sources */,
 				B4C76B5A29324BEB005AD4AD /* GitClient.swift in Sources */,
 				B4E9F5342C830F6F00A7BEF0 /* RepositoryDetails.swift in Sources */,
+				B4E9F5392C83A23000A7BEF0 /* PushBranchIntent.swift in Sources */,
+				B4E9F53F2C83AA2C00A7BEF0 /* CommitChangesIntent.swift in Sources */,
 				B4E9F51C2C7E33BF00A7BEF0 /* ErrorDescription.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -670,6 +678,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -708,6 +717,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -734,7 +744,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.zhuravskymax.git-treeTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -758,7 +768,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.zhuravskymax.git-treeTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -781,6 +791,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.zhuravskymax.git-treeUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -803,6 +814,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.zhuravskymax.git-treeUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";

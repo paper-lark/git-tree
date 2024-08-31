@@ -1,6 +1,6 @@
 import AppIntents
 
-struct DeleteLocalRepository: AppIntent {
+struct DeleteLocalRepositoryIntent: AppIntent {
     static var title: LocalizedStringResource = "Delete local repository"
     static var description = IntentDescription("Deletes an existing local Git repository.")
 

@@ -1,7 +1,10 @@
+import AppIntents
 import SwiftUI
 
 struct RepositoryView: View {
     var repository: Repository
+
+    @State private var credentials = RemoteCredentialsStore.getCredentials()
     @State private var repositoryDetails = RepositoryDetails()
 
     @Environment(\.editMode) var editMode
@@ -12,6 +15,9 @@ struct RepositoryView: View {
     @State private var isLoaded = false
     @State private var latestError = ErrorDescription.noError()
 
+    @State private var selectedRemote = ""
+    @State private var selectedBranch = ""
+
     var body: some View {
         VStack {
             if !isLoaded {
@@ -20,25 +26,30 @@ struct RepositoryView: View {
                 VStack(alignment: .leading) {
                     HStack(alignment: .firstTextBaseline) {
                         Text("Branch:")
-                        //                    if let current = repositoryDetails.currentBranch {
-                        //                        Picker(selection: $current.currentBranch, label: Text("Branch")) {
-                        //                            ForEach(repositoryDetails.localBranches, id: \.self) { branch in
-                        //                                Text(branch).tag(branch)
-                        //                            }
-                        //                        }
-                        //                        .onChange(of: $current.currentBranch, perform: {
-                        //                            _ in vm.updateHeadInfo()
-                        //                        })
-                        //                    }
+                        if let current = repositoryDetails.currentBranch {
+                            Picker(selection: $selectedBranch, label: Text("Branch")) {
+                                ForEach(repositoryDetails.localBranches, id: \.self) { branch in
+                                    Text(branch).tag(branch)
+                                }
+                            }
+                            //                            .onChange(of: $current.currentBranch, perform: {
+                            //                                _ in vm.updateHeadInfo()
+                            //                            })
+                        }
+
+                    }
+                    HStack(alignment: .firstTextBaseline) {
+                        Text("Remote:")
+                        Picker(selection: $selectedRemote, label: Text("Remote")) {
+                            ForEach(repositoryDetails.remotes, id: \.self) { branch in
+                                Text(branch).tag(branch)
+                            }
+                        }
 
                     }
                     Text(
                         "Latest commit: \(repositoryDetails.currentBranch?.latestCommitSHA ?? "<none>")"
                     )
-
-                    //                if let op = vm.currentOperation {
-                    //                    RepositoryAsyncOperationView(operation: op).padding(.top)
-                    //                }
                 }.padding()
 
                 Divider()
@@ -50,80 +61,134 @@ struct RepositoryView: View {
                     ) { file in
                         ChangedFileView(model: file)
                     }
-                    //                .refreshable {
-                    //                    vm.updateHeadInfo()
-                    //                    selectedFiles.removeAll()
-                    //                }
+                    .refreshable {
+                        do {
+                            selectedFiles.removeAll()
+                            try await updateDetails()
+                        } catch {
+                            latestError.showError(
+                                header: "Failed to refresh", description: error.localizedDescription
+                            )
+                            dismiss()
+                        }
+                    }
                 }
 
                 if isEditing() {
                     Divider()
                     HStack {
                         TextField("Commit message", text: $commitMessage)
-                        Button("Commit") {
-                            //                        vm.commit(files: selectedFiles)
-                            editMode?.wrappedValue = .inactive
+                        Button {
+                            Task {
+                                do {
+                                    let _ = try await CommitChangesIntent(
+                                        repository: repository,
+                                        files: selectedFiles,
+                                        message: commitMessage
+                                    ).perform()
+                                    try await updateDetails()
+                                    editMode?.wrappedValue = .inactive
+                                } catch {
+                                    latestError.showError(
+                                        header: "Failed to commit",
+                                        description: error.localizedDescription)
+                                }
+                            }
+                        } label: {
+                            Text("Commit")
                         }
                         .keyboardShortcut(.return)
-                        .disabled(
-                            //                        vm.currentOperation != nil || vm.changedFiles.isEmpty
-                            false
-                        )
+                        .disabled(commitMessage.isEmpty)
                     }.padding()
                 }
             }
         }
         .moveDisabled(true)
         .deleteDisabled(true)  // TODO: support reset for specific file
-        .navigationTitle(repositoryDetails.repository.name)
+        .navigationTitle(repository.name)
+        .errorMessage(error: $latestError)
         .toolbar {
             if repositoryDetails.currentBranch != nil {
                 EditButton()
 
                 if !isEditing() {
-                    Button(
-                        action: {
-                            //                            vm.resetToRemote()
-                        },
-                        label: { IconWithText(systemIcon: "doc.badge.gearshape", text: "Reset") }
-                    ).disabled(
-                        //                        vm.currentOperation != nil
-                        false
-                    )
-                    Button(
-                        action: {
-                            //                            vm.pull()
-                        },
-                        label: { IconWithText(systemIcon: "arrow.down.doc", text: "Pull") }
-                    ).disabled(
-                        //                        vm.currentOperation != nil
-                        false
-                    )
-                    Button(
-                        action: {
-                            //                            vm.push()
-                        },
-                        label: { IconWithText(systemIcon: "arrow.up.doc", text: "Push") }
-                    ).disabled(
-                        //                        vm.currentOperation != nil
-                        false
-                    )
+                    Button {
+                        Task {
+                            do {
+                                let _ = try await ResetToRemoteBranchIntent(repository: repository)
+                                    .perform()
+                                try await updateDetails()
+                            } catch {
+                                latestError.showError(
+                                    header: "Failed to reset to remote",
+                                    description: error.localizedDescription)
+                            }
+                        }
+                    } label: {
+                        IconWithText(systemIcon: "doc.badge.gearshape", text: "Reset to remote")
+                    }
+
+                    Button {
+                        Task {
+                            do {
+                                let _ = try await PullBranchIntent(
+                                    repository: repository,
+                                    remote: selectedRemote,
+                                    username: credentials.username,
+                                    password: credentials.password
+                                ).perform()
+                                try await updateDetails()
+                            } catch {
+                                latestError.showError(
+                                    header: "Failed to pull from remote",
+                                    description: error.localizedDescription)
+                            }
+                        }
+                    } label: {
+                        IconWithText(systemIcon: "arrow.down.doc", text: "Pull")
+                    }
+
+                    Button {
+                        Task {
+                            do {
+                                let _ = try await PushBranchIntent(
+                                    repository: repository,
+                                    remote: selectedRemote,
+                                    username: credentials.username,
+                                    password: credentials.password
+                                ).perform()
+                                try await updateDetails()
+                            } catch {
+                                latestError.showError(
+                                    header: "Failed to push to remote",
+                                    description: error.localizedDescription)
+                            }
+                        }
+                    } label: {
+                        IconWithText(systemIcon: "arrow.up.doc", text: "Push")
+                    }
                 }
             }
         }
         .task {
             defer { isLoaded = true }
             do {
-                if let details = try await GetRepositoryDetails(repository: repository).perform()
-                    .value
-                {
-                    repositoryDetails = details
-                }
+                try await updateDetails()
             } catch {
                 latestError.showError(
                     header: "Failed to open repository", description: error.localizedDescription)
                 dismiss()
             }
+        }
+    }
+
+    private func updateDetails() async throws {
+        if let details = try await GetRepositoryDetailsIntent(repository: repository).perform()
+            .value
+        {
+            repositoryDetails = details
+            selectedBranch = details.currentBranch?.currentBranch ?? ""
+            selectedRemote = details.remotes.first ?? ""
         }
     }
 
@@ -133,9 +198,10 @@ struct RepositoryView: View {
 
     private func shouldDisplayChangedFile(file: ChangedFile) -> Bool {
         switch file.changeType {
-        case .unmodified, .ignored, .untracked:
+        case .unmodified, .ignored:
             return false
         case .added, .deleted, .modified, .untracked, .renamed, .copied, .typeChange, .unreadable,
+            .untracked,
             .conflicted:
             return true
         }
