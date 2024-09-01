@@ -21,11 +21,19 @@ struct GitClient {
         return try GTRepository(url: repositoryFolder)
     }
 
+    static func resetIndex(_ repository: GTRepository) throws {
+        if let tree = try repository.currentBranch().targetCommit().tree {
+            try repository.index().clear()
+            try repository.index().addContents(of: tree)
+            try repository.index().write()
+        }
+    }
+
     static func getChangesForRepository(_ repository: GTRepository) throws -> [ChangedFile] {
         var files: [URL: ChangedFile] = [:]
 
-        func process(delta: GTStatusDelta) {
-            let changeType = FileChangeType.fromDeltaType(delta.status)
+        func process(delta: GTDiffDelta) {
+            let changeType = FileChangeType.fromDeltaType(delta.type)
             let oldFileURL = getFileURL(file: delta.newFile, relativeTo: repository.fileURL)
             let newFileURL = getFileURL(file: delta.oldFile, relativeTo: repository.fileURL)
             guard let key = newFileURL ?? oldFileURL else {
@@ -38,13 +46,9 @@ struct GitClient {
                 changeType: changeType)
         }
 
-        try repository.enumerateFileStatus(options: nil) { headToIndex, indexToWorkingDir, _ in
-            if let diff = headToIndex {
-                process(delta: diff)
-            }
-            if let diff = indexToWorkingDir {
-                process(delta: diff)
-            }
+        // collect diff
+        try GTDiff(workingDirectoryToHEADIn: repository).enumerateDeltas { delta, _ in
+            process(delta: delta)
         }
 
         return files.sorted { $0.key.relativePath < $1.key.relativePath }.map { $0.value }

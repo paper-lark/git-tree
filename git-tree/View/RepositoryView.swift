@@ -109,65 +109,65 @@ struct RepositoryView: View {
         .errorMessage(error: $latestError)
         .toolbar {
             if repositoryDetails.currentBranch != nil {
-                EditButton()
-
                 if !isEditing() {
-                    Button {
-                        Task {
-                            do {
-                                let _ = try await ResetToRemoteBranchIntent(repository: repository)
+                    Menu {
+                        Button("Reset to remote") {
+                            Task {
+                                do {
+                                    let _ = try await ResetToRemoteBranchIntent(
+                                        repository: repository
+                                    )
                                     .perform()
-                                try await updateDetails()
-                            } catch {
-                                latestError.showError(
-                                    header: "Failed to reset to remote",
-                                    description: error.localizedDescription)
+                                    try await updateDetails()
+                                } catch {
+                                    latestError.showError(
+                                        header: "Failed to reset to remote",
+                                        description: error.localizedDescription)
+                                }
                             }
                         }
-                    } label: {
-                        IconWithText(systemIcon: "doc.badge.gearshape", text: "Reset to remote")
-                    }
 
-                    Button {
-                        Task {
-                            do {
-                                let _ = try await PullBranchIntent(
-                                    repository: repository,
-                                    remote: selectedRemote,
-                                    username: credentials.username,
-                                    password: credentials.password
-                                ).perform()
-                                try await updateDetails()
-                            } catch {
-                                latestError.showError(
-                                    header: "Failed to pull from remote",
-                                    description: error.localizedDescription)
+                        Button("Pull") {
+                            Task {
+                                do {
+                                    let _ = try await PullBranchIntent(
+                                        repository: repository,
+                                        remote: selectedRemote,
+                                        username: credentials.username,
+                                        password: credentials.password
+                                    ).perform()
+                                    try await updateDetails()
+                                } catch {
+                                    latestError.showError(
+                                        header: "Failed to pull from remote",
+                                        description: error.localizedDescription)
+                                }
                             }
                         }
-                    } label: {
-                        IconWithText(systemIcon: "arrow.down.doc", text: "Pull")
-                    }
 
-                    Button {
-                        Task {
-                            do {
-                                let _ = try await PushBranchIntent(
-                                    repository: repository,
-                                    remote: selectedRemote,
-                                    username: credentials.username,
-                                    password: credentials.password
-                                ).perform()
-                                try await updateDetails()
-                            } catch {
-                                latestError.showError(
-                                    header: "Failed to push to remote",
-                                    description: error.localizedDescription)
+                        Button("Push") {
+                            Task {
+                                do {
+                                    let _ = try await PushBranchIntent(
+                                        repository: repository,
+                                        remote: selectedRemote,
+                                        username: credentials.username,
+                                        password: credentials.password
+                                    ).perform()
+                                    try await updateDetails()
+                                } catch {
+                                    latestError.showError(
+                                        header: "Failed to push to remote",
+                                        description: error.localizedDescription)
+                                }
                             }
                         }
                     } label: {
-                        IconWithText(systemIcon: "arrow.up.doc", text: "Push")
+                        Image(systemName: "doc.badge.gearshape")
                     }
                 }
+
+                EditButton()
             }
         }
         .task {

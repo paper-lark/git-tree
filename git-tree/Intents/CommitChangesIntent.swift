@@ -25,13 +25,18 @@ struct CommitChangesIntent: AppIntent {
         let repo = try GitClient.getRepository(localPath: repository.localPath)
 
         // add specified files to index
-        try repo.reset(to: repo.currentBranch().targetCommit(), resetType: .soft)
+        guard let tree = try repo.currentBranch().targetCommit().tree else {
+            throw RepositoryError.unexpectedError
+        }
+        let index = try GTIndex.inMemoryIndex(with: repo)
+        try index.addContents(of: tree)
+
         for file in files {
-            try repo.index().addFile(file)
+            try index.addFile(file)
         }
 
         // write index and commit it
-        let indexTree = try repo.index().writeTree()
+        let indexTree = try index.writeTree()
         let parentCommit = try repo.currentBranch().targetCommit()
         let createdCommit = try repo.createCommit(
             with: indexTree, message: message, parents: [parentCommit],
