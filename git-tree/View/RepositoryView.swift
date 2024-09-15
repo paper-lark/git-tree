@@ -13,6 +13,7 @@ struct RepositoryView: View {
     @State private var selectedFiles = Set<String>()
     @State private var commitMessage = ""
     @State private var isLoaded = false
+    @State private var isRefreshingChanges = false
     @State private var latestError = ErrorDescription.noError()
 
     @State private var selectedRemote = ""
@@ -62,8 +63,19 @@ struct RepositoryView: View {
 
                 if let current = repositoryDetails.currentBranch {
                     let displayedChanges = current.changedFiles.filter(shouldDisplayChangedFile)
-                    if displayedChanges.isEmpty {
-                        EmptyStubView(title: "No changes found in working directory")
+                    if isRefreshingChanges {
+                        ProgressView().frame(
+                            minWidth: 0, maxWidth: .infinity, maxHeight: .infinity,
+                            alignment: .center)
+                    } else if displayedChanges.isEmpty {
+                        EmptyStubView(title: "No changed files found").onTapGesture {
+                            Task {
+                                isRefreshingChanges = true
+                                defer { isRefreshingChanges = false }
+
+                                await refreshChanges()
+                            }
+                        }
                     } else {
                         List(
                             displayedChanges,

@@ -63,6 +63,8 @@ struct GitClient {
 
     static func getCloneRemoteOptions(username: String, password: String) throws -> [String: Any] {
         var result = try getRemoteOptions(username: username, password: password)
+        result[GTRepositoryCloneOptionsCredentialProvider] =
+            result[GTRepositoryRemoteOptionsCredentialProvider]
         result[GTRepositoryCloneOptionsCheckoutOptions] = GTCheckoutOptions(strategy: .safe)
 
         return result
@@ -71,8 +73,7 @@ struct GitClient {
     static func getRemoteOptions(username: String, password: String) throws -> [String: Any] {
         let credentials = try GTCredential(userName: username, password: password)
         return [
-            GTRepositoryRemoteOptionsCredentialProvider: GTCredentialProvider {
-                _, _, _ in
+            GTRepositoryRemoteOptionsCredentialProvider: GTCredentialProvider { _, _, _ in
                 credentials
             }
         ]

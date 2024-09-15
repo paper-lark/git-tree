@@ -39,9 +39,11 @@ struct CloneLocalRepositoryIntent: AppIntent {
 
         do {
             // clone remote repository
-            let _ = try GitClient.clone(
+            let repo = try GitClient.clone(
                 fromRemoteURL: remoteURL, toLocalURL: localPath, username: username,
                 password: password)
+            let remoteName = try repo.remoteNames()[0]  // TODO: get this somehow else?
+            let remote = try GTRemote(name: remoteName, in: repo)
             // TODO: No branch is cloned?
         } catch {
             localPath.stopAccessingSecurityScopedResource()

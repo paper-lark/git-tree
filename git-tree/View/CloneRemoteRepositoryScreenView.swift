@@ -61,7 +61,7 @@ struct CloneRemoteRepositoryScreenView: View {
                                 }
                             } catch {
                                 latestError.showError(
-                                    header: "Failed to open repository",
+                                    header: "Failed to clone repository",
                                     description: error.localizedDescription)
                             }
 
