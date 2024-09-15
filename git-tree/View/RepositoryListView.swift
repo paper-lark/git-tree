@@ -20,9 +20,7 @@ struct RepositoryListView: View {
                 }
 
                 if repositories.isEmpty {
-                    Text("No repositories found")
-                        .foregroundColor(.secondary)
-                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
+                    EmptyStubView(title: "No repositories found")
                 } else {
                     List(repositories) { repo in
                         NavigationLink(repo.name) {

@@ -18,12 +18,9 @@ struct AddLocalRepositoryIntent: AppIntent {
         if !localPath.startAccessingSecurityScopedResource() {
             throw RepositoryError.filePathUnavailable
         }
-        guard
-            let bookmarkData = try? localPath.bookmarkData(
-                options: .minimalBookmark, includingResourceValuesForKeys: nil, relativeTo: nil)
-        else {
-            throw RepositoryError.filePathUnavailable
-        }
+        let options: URL.BookmarkCreationOptions = [.minimalBookmark]
+        let bookmarkData = try localPath.bookmarkData(
+            options: options, includingResourceValuesForKeys: nil, relativeTo: nil)
 
         // check if folder is a valid repository
         do {

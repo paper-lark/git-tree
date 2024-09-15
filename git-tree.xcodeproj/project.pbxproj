@@ -51,6 +51,9 @@
 		B4E9F53D2C83A2D900A7BEF0 /* ResetToRemoteBranchIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E9F53C2C83A2D900A7BEF0 /* ResetToRemoteBranchIntent.swift */; };
 		B4E9F53F2C83AA2C00A7BEF0 /* CommitChangesIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E9F53E2C83AA2C00A7BEF0 /* CommitChangesIntent.swift */; };
 		B4E9F5412C83B7C000A7BEF0 /* RemoteCredentialsScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E9F5402C83B7C000A7BEF0 /* RemoteCredentialsScreenView.swift */; };
+		B4E9F5452C9741E800A7BEF0 /* Commit.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E9F5442C9741E800A7BEF0 /* Commit.swift */; };
+		B4E9F5472C9743F100A7BEF0 /* CommitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E9F5462C9743F100A7BEF0 /* CommitView.swift */; };
+		B4E9F5492C975D9300A7BEF0 /* EmptyStubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E9F5482C975D9300A7BEF0 /* EmptyStubView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -152,6 +155,9 @@
 		B4E9F53C2C83A2D900A7BEF0 /* ResetToRemoteBranchIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetToRemoteBranchIntent.swift; sourceTree = "<group>"; };
 		B4E9F53E2C83AA2C00A7BEF0 /* CommitChangesIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitChangesIntent.swift; sourceTree = "<group>"; };
 		B4E9F5402C83B7C000A7BEF0 /* RemoteCredentialsScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteCredentialsScreenView.swift; sourceTree = "<group>"; };
+		B4E9F5442C9741E800A7BEF0 /* Commit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Commit.swift; sourceTree = "<group>"; };
+		B4E9F5462C9743F100A7BEF0 /* CommitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitView.swift; sourceTree = "<group>"; };
+		B4E9F5482C975D9300A7BEF0 /* EmptyStubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStubView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -258,6 +264,7 @@
 			isa = PBXGroup;
 			children = (
 				B4C76B2B293248A8005AD4AD /* RepositoryListView.swift */,
+				B4E9F5482C975D9300A7BEF0 /* EmptyStubView.swift */,
 				B4C76B6729326AF9005AD4AD /* RepositoryView.swift */,
 				B4C76B7C2933A559005AD4AD /* ChangedFileView.swift */,
 				B4C76B6F293390E7005AD4AD /* IconWithText.swift */,
@@ -268,6 +275,7 @@
 				B4C76B882939D051005AD4AD /* RemoteRepositoryView.swift */,
 				B4C7CC66293CACFA00250EA6 /* RepositoryAsyncOperationView.swift */,
 				B4E9F51D2C7E347F00A7BEF0 /* View+ErrorMessage.swift */,
+				B4E9F5462C9743F100A7BEF0 /* CommitView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -283,6 +291,7 @@
 				B4E9F5192C7E330900A7BEF0 /* RepositoryError.swift */,
 				B4E9F5332C830F6F00A7BEF0 /* RepositoryDetails.swift */,
 				B4E9F5282C7F8D0800A7BEF0 /* Repository.swift */,
+				B4E9F5442C9741E800A7BEF0 /* Commit.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -388,7 +397,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1410;
-				LastUpgradeCheck = 1410;
+				LastUpgradeCheck = 1540;
 				TargetAttributes = {
 					B4C76B25293248A8005AD4AD = {
 						CreatedOnToolsVersion = 14.1;
@@ -460,6 +469,7 @@
 				B4E9F52B2C7F9D6800A7BEF0 /* RepositoryBookmarkStore.swift in Sources */,
 				B4E9F5372C83132200A7BEF0 /* GetRepositoryDetailsIntent.swift in Sources */,
 				B4C76B7F2933C241005AD4AD /* Colors.swift in Sources */,
+				B4E9F5492C975D9300A7BEF0 /* EmptyStubView.swift in Sources */,
 				B4C7CC67293CACFA00250EA6 /* RepositoryAsyncOperationView.swift in Sources */,
 				B4E9F52E2C7FA87800A7BEF0 /* DeleteLocalRepositoryIntent.swift in Sources */,
 				B4E9F5292C7F8D0800A7BEF0 /* Repository.swift in Sources */,
@@ -472,6 +482,7 @@
 				B4C76B722933922F005AD4AD /* RemoteCredentialsView.swift in Sources */,
 				B4C76B70293390E7005AD4AD /* IconWithText.swift in Sources */,
 				B4C76B812933C5A2005AD4AD /* SplashScreenView.swift in Sources */,
+				B4E9F5472C9743F100A7BEF0 /* CommitView.swift in Sources */,
 				B4E9F5412C83B7C000A7BEF0 /* RemoteCredentialsScreenView.swift in Sources */,
 				B4C76B2C293248A8005AD4AD /* RepositoryListView.swift in Sources */,
 				B4C7CC69293CAD4600250EA6 /* RepositoryAsyncOperation.swift in Sources */,
@@ -479,6 +490,7 @@
 				B4E9F51A2C7E330900A7BEF0 /* RepositoryError.swift in Sources */,
 				B4C76B2A293248A8005AD4AD /* App.swift in Sources */,
 				B4C76B7629339E1E005AD4AD /* KeychainConfiguration.swift in Sources */,
+				B4E9F5452C9741E800A7BEF0 /* Commit.swift in Sources */,
 				B4E9F53D2C83A2D900A7BEF0 /* ResetToRemoteBranchIntent.swift in Sources */,
 				B4C76B7929339FBF005AD4AD /* KeychainHelper.swift in Sources */,
 				B4E9F5302C80E4A700A7BEF0 /* CloneRemoteRepositoryIntent.swift in Sources */,
@@ -559,6 +571,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -621,6 +634,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;

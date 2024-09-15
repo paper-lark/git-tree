@@ -17,13 +17,14 @@ struct RepositoryView: View {
 
     @State private var selectedRemote = ""
     @State private var selectedBranch = ""
+    @State private var runningOperation: RepositoryAsyncOperation? = nil
 
     var body: some View {
         VStack {
             if !isLoaded {
                 ProgressView("Opening repository")
             } else {
-                VStack(alignment: .leading) {
+                HStack(alignment: .center) {
                     HStack(alignment: .firstTextBaseline) {
                         Text("Branch:")
                         if let current = repositoryDetails.currentBranch {
@@ -31,46 +32,45 @@ struct RepositoryView: View {
                                 ForEach(repositoryDetails.localBranches, id: \.self) { branch in
                                     Text(branch).tag(branch)
                                 }
-                            }
+                            }.disabled(true)
+                            // TODO: support changing a branch
                             //                            .onChange(of: $current.currentBranch, perform: {
                             //                                _ in vm.updateHeadInfo()
                             //                            })
                         }
 
                     }
-                    HStack(alignment: .firstTextBaseline) {
-                        Text("Remote:")
-                        Picker(selection: $selectedRemote, label: Text("Remote")) {
-                            ForEach(repositoryDetails.remotes, id: \.self) { branch in
-                                Text(branch).tag(branch)
+                    if !repositoryDetails.remotes.isEmpty {
+                        HStack(alignment: .firstTextBaseline) {
+                            Text("Remote:")
+                            Picker(selection: $selectedRemote, label: Text("Remote")) {
+                                ForEach(repositoryDetails.remotes, id: \.self) { branch in
+                                    Text(branch).tag(branch)
+                                }
                             }
                         }
-
                     }
-                    Text(
-                        "Latest commit: \(repositoryDetails.currentBranch?.latestCommitSHA ?? "<none>")"
-                    )
                 }.padding()
 
                 Divider()
 
+                if let targetCommit = repositoryDetails.currentBranch?.targetCommit {
+                    CommitView(commit: targetCommit).padding()
+                }
+
+                Divider()
+
                 if let current = repositoryDetails.currentBranch {
-                    List(
-                        current.changedFiles.filter(shouldDisplayChangedFile),
-                        selection: $selectedFiles
-                    ) { file in
-                        ChangedFileView(model: file)
-                    }
-                    .refreshable {
-                        do {
-                            selectedFiles.removeAll()
-                            try await updateDetails()
-                        } catch {
-                            latestError.showError(
-                                header: "Failed to refresh", description: error.localizedDescription
-                            )
-                            dismiss()
-                        }
+                    let displayedChanges = current.changedFiles.filter(shouldDisplayChangedFile)
+                    if displayedChanges.isEmpty {
+                        EmptyStubView(title: "No changes found in working directory")
+                    } else {
+                        List(
+                            displayedChanges,
+                            selection: $selectedFiles
+                        ) { file in
+                            ChangedFileView(model: file)
+                        }.refreshable { await refreshChanges() }
                     }
                 }
 
@@ -101,6 +101,10 @@ struct RepositoryView: View {
                         .disabled(commitMessage.isEmpty)
                     }.padding()
                 }
+
+                if let operation = runningOperation {
+                    RepositoryAsyncOperationView(operation: operation)
+                }
             }
         }
         .moveDisabled(true)
@@ -113,6 +117,9 @@ struct RepositoryView: View {
                     Menu {
                         Button("Reset to remote") {
                             Task {
+                                runningOperation = RepositoryAsyncOperation(kind: .reset)
+                                defer { runningOperation = nil }
+
                                 do {
                                     let _ = try await ResetToRemoteBranchIntent(
                                         repository: repository
@@ -125,10 +132,13 @@ struct RepositoryView: View {
                                         description: error.localizedDescription)
                                 }
                             }
-                        }
+                        }.disabled(runningOperation != nil)
 
                         Button("Pull") {
                             Task {
+                                runningOperation = RepositoryAsyncOperation(kind: .pull)
+                                defer { runningOperation = nil }
+
                                 do {
                                     let _ = try await PullBranchIntent(
                                         repository: repository,
@@ -143,10 +153,13 @@ struct RepositoryView: View {
                                         description: error.localizedDescription)
                                 }
                             }
-                        }
+                        }.disabled(runningOperation != nil)
 
                         Button("Push") {
                             Task {
+                                runningOperation = RepositoryAsyncOperation(kind: .push)
+                                defer { runningOperation = nil }
+
                                 do {
                                     let _ = try await PushBranchIntent(
                                         repository: repository,
@@ -161,13 +174,18 @@ struct RepositoryView: View {
                                         description: error.localizedDescription)
                                 }
                             }
-                        }
+                        }.disabled(runningOperation != nil)
                     } label: {
                         Image(systemName: "doc.badge.gearshape")
-                    }
+                    }.disabled(runningOperation != nil)
                 }
 
-                EditButton()
+                if let current = repositoryDetails.currentBranch {
+                    let displayedChanges = current.changedFiles.filter(shouldDisplayChangedFile)
+                    if !displayedChanges.isEmpty {
+                        EditButton()
+                    }
+                }
             }
         }
         .task {
@@ -179,6 +197,18 @@ struct RepositoryView: View {
                     header: "Failed to open repository", description: error.localizedDescription)
                 dismiss()
             }
+        }
+    }
+
+    private func refreshChanges() async {
+        do {
+            selectedFiles.removeAll()
+            try await updateDetails()
+        } catch {
+            latestError.showError(
+                header: "Failed to refresh", description: error.localizedDescription
+            )
+            dismiss()
         }
     }
 
@@ -201,7 +231,6 @@ struct RepositoryView: View {
         case .unmodified, .ignored:
             return false
         case .added, .deleted, .modified, .untracked, .renamed, .copied, .typeChange, .unreadable,
-            .untracked,
             .conflicted:
             return true
         }

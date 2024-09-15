@@ -19,9 +19,14 @@ struct GetRepositoryDetailsIntent: AppIntent {
         var currentBranchDetails: RepositoryCurrentBranchDetails? = nil
         if let currentBranch = try? repo.currentBranch() {
             let changedFiles = try GitClient.getChangesForRepository(repo)
+            let targetCommit = try currentBranch.targetCommit()
             currentBranchDetails = RepositoryCurrentBranchDetails(
                 currentBranch: getBranchName(branch: currentBranch),
-                latestCommitSHA: try currentBranch.targetCommit().sha,
+                targetCommit: Commit(
+                    sha: targetCommit.sha,
+                    message: targetCommit.message,
+                    date: targetCommit.commitDate
+                ),
                 changedFiles: changedFiles
             )
         }

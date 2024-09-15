@@ -26,7 +26,7 @@ struct RepositoryDetails: TransientAppEntity {
 
 struct RepositoryCurrentBranchDetails: Identifiable {
     var currentBranch: String
-    var latestCommitSHA: String
+    var targetCommit: Commit
     var changedFiles: [ChangedFile]
 
     var id: String { currentBranch }
