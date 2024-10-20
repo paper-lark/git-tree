@@ -101,7 +101,7 @@ struct RepositoryView: View {
                                     try await updateDetails()
                                     editMode?.wrappedValue = .inactive
                                 } catch {
-                                    latestError.showError(
+                                     latestError.showError(
                                         header: "Failed to commit",
                                         description: error.localizedDescription)
                                 }

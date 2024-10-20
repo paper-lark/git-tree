@@ -28,9 +28,11 @@ struct CommitChangesIntent: AppIntent {
         guard let tree = try repo.currentBranch().targetCommit().tree else {
             throw RepositoryError.unexpectedError
         }
-        let index = try GTIndex.inMemoryIndex(with: repo)
+        // NOTE: In-memory index should be better but it fails on addFile().
+        // let index = try GTIndex.inMemoryIndex(with: repo)
+        let index = try repo.index()
+        try index.clear()
         try index.addContents(of: tree)
-
         for file in files {
             try index.addFile(file)
         }
